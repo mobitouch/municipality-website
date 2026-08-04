@@ -165,7 +165,7 @@
     "newSubmission": "Submit another complaint",
     "errorTitle": "Couldn't submit your complaint",
     "errorGeneric": "Something went wrong. Please try again later.",
-    "errorMailNotConfigured": "Email delivery isn't configured on the server yet. Please contact us by phone for now.",
+    "errorMailNotConfigured": "We couldn't submit this right now. Please contact us by phone for now.",
     "validation": {
       "nameRequired": "Please enter your full name",
       "phoneRequired": "Please enter a valid phone number",
@@ -196,7 +196,7 @@
     "sendAnother": "Send another message",
     "errorTitle": "Couldn't send your message",
     "errorGeneric": "Something went wrong. Please try again later.",
-    "errorMailNotConfigured": "Email delivery isn't configured on the server yet. Please contact us by phone for now.",
+    "errorMailNotConfigured": "We couldn't submit this right now. Please contact us by phone for now.",
     "validation": {
       "nameRequired": "Please enter your name",
       "contactRequired": "Please enter a valid email or phone number",

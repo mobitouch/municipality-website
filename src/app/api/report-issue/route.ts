@@ -4,14 +4,26 @@ import {
   MAX_FILE_SIZE,
   MAX_TOTAL_FILES_SIZE,
   reportIssueSchema,
+  type ReportIssueType,
 } from "@/lib/validation";
 import { isMailConfigured, sendMail } from "@/lib/mailer";
 import { checkRateLimit } from "@/lib/rateLimit";
 import { escapeHtml } from "@/lib/escapeHtml";
+import { forwardToDashboard } from "@/lib/dashboard";
 
 function generateTrackingCode() {
   return `AM-${Date.now().toString(36).toUpperCase()}-${Math.floor(Math.random() * 1000)}`;
 }
+
+// Maps the website's complaint type to a category the dashboard recognizes
+// (dashboard/lib/constants.ts CATEGORIES) so it lands with the right
+// suggested department and shows up in the right filter.
+const DASHBOARD_CATEGORY: Record<ReportIssueType, string> = {
+  roads: "Roads & Potholes",
+  lighting: "Street Lighting",
+  health: "Health & Environment",
+  other: "General Inquiry",
+};
 
 export async function POST(request: NextRequest) {
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
@@ -59,34 +71,54 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "file_too_large" }, { status: 400 });
   }
 
-  if (!isMailConfigured()) {
-    return NextResponse.json({ error: "mail_not_configured" }, { status: 503 });
-  }
-
   const { name, phone, type, description, lat, lng } = parsed.data;
-  const trackingCode = generateTrackingCode();
+  const locationLine = lat !== undefined && lng !== undefined ? `${lat}, ${lng}` : "-";
+  const attachmentNote =
+    files.length > 0
+      ? `\n\n📎 ${files.length} file(s) attached — sent to the municipality inbox by email.`
+      : "";
 
-  try {
-    const attachments = await Promise.all(
-      files.map(async (file) => ({
-        filename: file.name,
-        content: Buffer.from(await file.arrayBuffer()),
-        contentType: file.type,
-      })),
-    );
+  // Two independent delivery channels: the staff dashboard (primary — shows
+  // up live for municipal staff, with the real location pin) and email
+  // (secondary/best-effort, and the only channel that carries the photo
+  // attachments — the dashboard's data model doesn't support file uploads).
+  const dashboardResult = await forwardToDashboard({
+    citizenName: name,
+    phone,
+    category: DASHBOARD_CATEGORY[type],
+    location: lat !== undefined && lng !== undefined ? `${lat}, ${lng}` : "",
+    description: description + attachmentNote,
+    source: "website",
+  });
 
-    const locationLine = lat !== undefined && lng !== undefined ? `${lat}, ${lng}` : "-";
+  const trackingCode = dashboardResult.referenceNumber ?? generateTrackingCode();
 
-    await sendMail({
-      subject: `New complaint (${type}) — ${trackingCode}`,
-      text: `Name: ${name}\nPhone: ${phone}\nType: ${type}\nLocation: ${locationLine}\nTracking: ${trackingCode}\n\n${description}`,
-      html: `<p><strong>Name:</strong> ${escapeHtml(name)}</p><p><strong>Phone:</strong> ${escapeHtml(phone)}</p><p><strong>Type:</strong> ${escapeHtml(type)}</p><p><strong>Location:</strong> ${escapeHtml(locationLine)}</p><p><strong>Tracking code:</strong> ${trackingCode}</p><p>${escapeHtml(description).replace(/\n/g, "<br/>")}</p>`,
-      attachments,
-    });
+  let emailOk = false;
+  if (isMailConfigured()) {
+    try {
+      const attachments = await Promise.all(
+        files.map(async (file) => ({
+          filename: file.name,
+          content: Buffer.from(await file.arrayBuffer()),
+          contentType: file.type,
+        })),
+      );
 
-    return NextResponse.json({ ok: true, trackingCode });
-  } catch (error) {
-    console.error("report-issue mail send failed", error);
-    return NextResponse.json({ error: "send_failed" }, { status: 502 });
+      await sendMail({
+        subject: `New complaint (${type}) — ${trackingCode}`,
+        text: `Name: ${name}\nPhone: ${phone}\nType: ${type}\nLocation: ${locationLine}\nTracking: ${trackingCode}\n\n${description}`,
+        html: `<p><strong>Name:</strong> ${escapeHtml(name)}</p><p><strong>Phone:</strong> ${escapeHtml(phone)}</p><p><strong>Type:</strong> ${escapeHtml(type)}</p><p><strong>Location:</strong> ${escapeHtml(locationLine)}</p><p><strong>Tracking code:</strong> ${trackingCode}</p><p>${escapeHtml(description).replace(/\n/g, "<br/>")}</p>`,
+        attachments,
+      });
+      emailOk = true;
+    } catch (error) {
+      console.error("report-issue mail send failed", error);
+    }
   }
+
+  if (dashboardResult.ok || emailOk) {
+    return NextResponse.json({ ok: true, trackingCode });
+  }
+
+  return NextResponse.json({ error: "mail_not_configured" }, { status: 503 });
 }

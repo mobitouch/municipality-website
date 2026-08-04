@@ -165,7 +165,7 @@
     "newSubmission": "Envoyer une nouvelle réclamation",
     "errorTitle": "Impossible d'envoyer la réclamation",
     "errorGeneric": "Une erreur s'est produite. Veuillez réessayer plus tard.",
-    "errorMailNotConfigured": "L'envoi d'e-mails n'est pas encore configuré sur le serveur. Merci de nous contacter par téléphone pour le moment.",
+    "errorMailNotConfigured": "Nous n'avons pas pu envoyer votre message pour le moment. Merci de nous contacter par téléphone.",
     "validation": {
       "nameRequired": "Veuillez entrer votre nom complet",
       "phoneRequired": "Veuillez entrer un numéro de téléphone valide",
@@ -196,7 +196,7 @@
     "sendAnother": "Envoyer un autre message",
     "errorTitle": "Impossible d'envoyer le message",
     "errorGeneric": "Une erreur s'est produite. Veuillez réessayer plus tard.",
-    "errorMailNotConfigured": "L'envoi d'e-mails n'est pas encore configuré sur le serveur. Merci de nous contacter par téléphone pour le moment.",
+    "errorMailNotConfigured": "Nous n'avons pas pu envoyer votre message pour le moment. Merci de nous contacter par téléphone.",
     "validation": {
       "nameRequired": "Veuillez entrer votre nom",
       "contactRequired": "Veuillez entrer un e-mail ou un numéro de téléphone valide",

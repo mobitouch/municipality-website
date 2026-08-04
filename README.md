@@ -13,6 +13,8 @@ Official website of Amioun Municipality (Lebanon), built with Next.js (App Route
 - **nodemailer** — email delivery for the Contact and Report an Issue forms
 - **react-leaflet** (OpenStreetMap) — location picker on the Report an Issue page
 
+The Contact and Report an Issue forms deliver over two independent channels: the staff dashboard (a separate app, `../dashboard` — shows up live for municipal staff) and email. See `src/lib/dashboard.ts` and [Environment variables](#environment-variables) below.
+
 ## Getting started
 
 ```bash
@@ -30,14 +32,18 @@ Copy `.env.example` to `.env.local` and fill in SMTP credentials to enable the C
 cp .env.example .env.local
 ```
 
-Without these set, both forms validate and submit correctly but the API routes return a clear "email not configured" error instead of silently pretending to succeed — nothing to debug later, just add credentials when you have them.
+Without these set, both forms validate and submit correctly but the API routes return a "couldn't submit" error instead of silently pretending to succeed — unless the dashboard channel below is configured, in which case that alone is enough.
 
 | Variable | Description |
 |---|---|
+| `DASHBOARD_API_URL` | Base URL of the staff dashboard app (e.g. `https://darkslategrey-wren-752221.hostingersite.com`, no trailing path). |
+| `DASHBOARD_API_KEY` | Shared secret sent as `x-api-key` — must match the dashboard's own `API_KEY` env var exactly. |
 | `SMTP_HOST` / `SMTP_PORT` / `SMTP_SECURE` | Your SMTP server. `SMTP_SECURE=true` only for implicit-TLS (usually port 465). |
 | `SMTP_USER` / `SMTP_PASS` | SMTP credentials. |
 | `MAIL_TO` | Mailbox that receives form submissions. |
 | `MAIL_FROM` | Optional; defaults to `SMTP_USER`. |
+
+Either the dashboard pair or the SMTP set (all four) needs to be configured — they're independent, redundant channels, not both required.
 
 ## Scripts
 
@@ -76,12 +82,11 @@ Editing site copy (nav labels, news items, project list, council members, etc.) 
 Standard Next.js app — deploys as-is to Vercel, or anywhere that can run `next build && next start` (Node 20+). No database or external services required beyond SMTP for the forms.
 
 Before going live:
-- Set `SMTP_*` / `MAIL_TO` / `MAIL_FROM` in your hosting provider's environment variables.
+- Set `DASHBOARD_API_URL` / `DASHBOARD_API_KEY` and/or `SMTP_*` / `MAIL_TO` / `MAIL_FROM` in your hosting provider's environment variables — this app and the dashboard app are deployed separately (two Hostinger Node.js apps), so both need their env vars set independently through their own panels, and `DASHBOARD_API_KEY` here must exactly match `API_KEY` on the dashboard.
 - Update the placeholder domain (`https://amioun.gov.lb`) in `src/app/[locale]/layout.tsx` and `src/app/sitemap.ts` / `src/app/robots.ts` if the real domain differs.
 - Swap the placeholder stock photography (Unsplash images on News/Projects, ui-avatars.com avatars on the About page's council cards) for real photos.
 - Update the phone/email/address/social links in `src/messages/*.json` (`Nav.phone`, `Nav.email`, `Footer.address`, `Footer` social hrefs) with the municipality's real contact details.
 
 ## Notes
 
-- `_legacy-express-site/` at the project root is the previous Express/EJS implementation, kept as a reference and safe to delete once you're happy with this version.
 - The language switcher was rebuilt as a click-controlled dropdown (was previously a CSS `:hover` menu with a dead zone between the trigger and the panel that made it close before you could click an option).
