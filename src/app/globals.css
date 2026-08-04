@@ -1,0 +1,189 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-koura-primary: #2c5530;
+  --color-koura-secondary: #d4af37;
+  --color-koura-accent: #d4af37;
+  --color-koura-bg: #fdfcf7;
+  --color-koura-text: #2c3325;
+  --font-sans: var(--font-tajawal), ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fdfcf7;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #090d09;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2c5530;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d4af37;
+}
+
+/* Institutional Typography Scale */
+.text-display-1 {
+  font-size: clamp(2.5rem, 5vw + 1rem, 5.25rem);
+  line-height: 1.1;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.text-section-title {
+  font-size: clamp(1.875rem, 3vw + 1rem, 3rem);
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.text-subtitle {
+  font-size: clamp(1.125rem, 1.5vw + 0.5rem, 1.35rem);
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+/* Hero Background Animation */
+@keyframes gradientOverlay {
+  0% {
+    background-color: rgba(44, 85, 48, 0.88);
+  }
+  50% {
+    background-color: rgba(18, 38, 20, 0.88);
+  }
+  100% {
+    background-color: rgba(44, 85, 48, 0.88);
+  }
+}
+
+.hero-gradient {
+  animation: gradientOverlay 10s ease-in-out infinite;
+}
+
+/* Premium Glassmorphism */
+.glass-ui {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  box-shadow: 0 12px 32px rgba(44, 85, 48, 0.05);
+}
+
+.dark .glass-ui {
+  background: rgba(15, 22, 15, 0.88);
+  border-color: rgba(212, 175, 55, 0.22);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.55);
+}
+
+/* Gold & Green Decorative Utility Tokens */
+.gold-glow {
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.25);
+}
+
+/* Pulse Animation for WhatsApp */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 16px rgba(37, 211, 102, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+  }
+}
+
+.whatsapp-pulse {
+  animation: pulse-ring 2.5s infinite;
+}
+
+/* Hover elevation & lift effects */
+.hover-lift-gold {
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.35s ease;
+}
+
+.hover-lift-gold:hover {
+  transform: translateY(-5px) scale(1.015);
+  box-shadow: 0 22px 45px -15px rgba(212, 175, 55, 0.35);
+}
+
+/* Tactile Grain Texture Overlay */
+.bg-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* Accessibility: High Contrast Mode */
+body.high-contrast {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+body.high-contrast * {
+  background-color: #000 !important;
+  color: #fff !important;
+  border-color: #ffff00 !important;
+  box-shadow: none !important;
+}
+body.high-contrast a,
+body.high-contrast button {
+  color: #ffff00 !important;
+  text-decoration: underline !important;
+}
+body.high-contrast img {
+  filter: grayscale(100%) contrast(120%);
+}
+
+/* Accessibility: Highlight Links Mode */
+body.highlight-links a,
+body.highlight-links button {
+  background-color: #ffff00 !important;
+  color: #000 !important;
+  text-decoration: underline !important;
+  font-weight: 900 !important;
+  outline: 2px solid #000 !important;
+}
+
+/* Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

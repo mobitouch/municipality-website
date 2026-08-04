@@ -1,0 +1,284 @@
+{
+  "NotFound": {
+    "title": "404",
+    "description": "The page you're looking for doesn't exist or has been moved.",
+    "backHome": "Back to home"
+  },
+  "Nav": {
+    "brandName": "Amioun Municipality",
+    "brandSub": "Amioun Municipality",
+    "home": "Home",
+    "digital": "Digital Municipality",
+    "services": "Citizen Services",
+    "complaints": "Complaints",
+    "projects": "Projects",
+    "news": "News",
+    "about": "About Us",
+    "contact": "Contact Us",
+    "quickRequest": "Quick Request",
+    "phone": "+961 6 123 456",
+    "email": "info@amioun.gov.lb"
+  },
+  "Footer": {
+    "desc": "We work to provide the best services to citizens and improve infrastructure in Amioun through a transparent and reliable digital platform.",
+    "linksTitle": "Quick Links",
+    "contactTitle": "Contact Information",
+    "address": "Lebanon, North Governorate, Koura District, Amioun Main Municipal Building",
+    "copyright": "© {year} Amioun Municipality. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use",
+    "accessibility": "Accessibility"
+  },
+  "A11y": {
+    "title": "Accessibility Tools",
+    "textSize": "Text Size",
+    "increase": "Increase text size",
+    "decrease": "Decrease text size",
+    "default": "Default",
+    "contrast": "High Contrast",
+    "links": "Highlight Links",
+    "open": "Open accessibility tools",
+    "close": "Close"
+  },
+  "LanguageSwitcher": {
+    "label": "Choose language",
+    "ar": "العربية (AR)",
+    "en": "English (EN)",
+    "fr": "Français (FR)"
+  },
+  "ThemeToggle": {
+    "toLight": "Switch to light mode",
+    "toDark": "Switch to dark mode"
+  },
+  "MobileNav": {
+    "open": "Open menu",
+    "close": "Close menu"
+  },
+  "WhatsApp": {
+    "label": "Contact us on WhatsApp"
+  },
+  "Home": {
+    "metaDescription": "The official digital portal of Amioun Municipality: citizen services, projects, news, and online complaint submission.",
+    "heroBadge": "Modern Civic Platform",
+    "heroTitle1": "Towards Smart &",
+    "heroTitle2": "Transparent Management",
+    "heroDesc": "Welcome to Amioun Digital Portal, the new generation of municipal services to streamline your daily transactions quickly and reliably from anywhere.",
+    "heroBtn": "Explore Online Services",
+    "dashTitle": "Amioun in Numbers",
+    "statCompletedTitle": "Completed Projects",
+    "statCompletedDesc": "Infrastructure & development projects",
+    "statCompletedValue": 24,
+    "statWeatherDesc": "Partly Sunny",
+    "statWeatherValue": "22",
+    "statComplaintsTitle": "Resolved Complaints",
+    "statComplaintsTag": "Excellent",
+    "statComplaintsValue": 98,
+    "cards": [
+      { "title": "Citizen Services", "desc": "Submit applications, extract official certificates, and complete municipal transactions entirely online.", "href": "/citizen-services" },
+      { "title": "Payment Gateway", "desc": "Pay municipal taxes and fees through a secure and reliable online payment system.", "href": "/digital-municipality" },
+      { "title": "Report an Issue", "desc": "Report breakdowns and violations and track application status with maintenance teams in real time.", "href": "/report-issue" },
+      { "title": "Projects", "desc": "Browse development plans and execution stages of vital projects in Amioun transparently.", "href": "/projects" }
+    ]
+  },
+  "About": {
+    "metaDescription": "Learn about the history of Amioun Municipality and the council members serving the town.",
+    "title": "About Amioun Municipality",
+    "subtitle": "A rich history and a bright future. Learn about the story of Amioun and the municipal council serving it.",
+    "historyTitle": "Historical Overview",
+    "timeline": [
+      { "title": "Ancient Eras", "desc": "Amioun is an ancient historical town with roots dating back to Phoenician and Roman periods, famous for its archaeological landmarks." },
+      { "title": "Municipal Foundation", "desc": "Amioun Municipality was established in the early 20th century to organize town affairs and manage public facilities." },
+      { "title": "Digital Transformation", "desc": "Launch of the digital municipality project to deliver transparent and fast electronic services to citizens." }
+    ],
+    "councilTitle": "Municipal Council",
+    "councilDesc": "Dedicated members working together to serve and advance Amioun.",
+    "members": [
+      { "name": "Eng. Ghassan Azar", "role": "Mayor", "avatarSeed": "President", "avatarBg": "4A6635" },
+      { "name": "Dr. Fadi Ferzli", "role": "Deputy Mayor", "avatarSeed": "Vice+President", "avatarBg": "8B5A2B" },
+      { "name": "Mrs. Mary Abboud", "role": "Council Member", "avatarSeed": "Member+1", "avatarBg": "ddd" },
+      { "name": "Mr. Joseph El-Khoury", "role": "Council Member", "avatarSeed": "Member+2", "avatarBg": "ddd" }
+    ]
+  },
+  "CitizenServices": {
+    "metaDescription": "Amioun Municipality citizen services guide: document issuance, building permits, municipal fees, and property certificates.",
+    "title": "Citizen Services Guide",
+    "subtitle": "Search for municipal services, submit requests, and track your paperwork easily and transparently.",
+    "searchPh": "Search for a service (e.g. building permit, residence certificate...)",
+    "searchBtn": "Search",
+    "searchEmpty": "No services match your search.",
+    "categoriesTitle": "Main Categories",
+    "explore": "Explore services",
+    "categories": [
+      { "title": "Real Estate & Engineering Affairs", "desc": "Building permits, zoning certificates, subdivision and merging, and renovation permits." },
+      { "title": "Business Licenses", "desc": "Issuance and renewal of licenses for commercial, industrial, and health establishments." },
+      { "title": "Personal Status & Documents", "desc": "Residence certificates, residency permits, and certified civil documents." },
+      { "title": "Health & Environment", "desc": "Health certificates, pesticide spraying requests, tree pruning, and waste collection." }
+    ],
+    "guideTitle": "How to Submit Requests",
+    "guideSubtitle": "Simple steps to complete your transactions online or in person",
+    "steps": [
+      { "title": "Select Service", "desc": "Search for the required service and view documents and fees." },
+      { "title": "Fill Request", "desc": "Fill out the electronic form and upload clear supporting documents." },
+      { "title": "Payment & Tracking", "desc": "Pay fees via secure payment gateway and track request status." },
+      { "title": "Receive Document", "desc": "Receive requested document digitally or physically from municipal building." }
+    ]
+  },
+  "ReportIssue": {
+    "metaDescription": "Report an issue or complaint to Amioun Municipality. Your voice matters.",
+    "title": "Report an Issue",
+    "subtitle": "Your voice matters. Share your feedback or complaints to improve Amioun together.",
+    "formTitle": "Complaint Details",
+    "labelName": "Full Name",
+    "phName": "Enter your full name",
+    "labelPhone": "Phone Number",
+    "phPhone": "Enter your phone number",
+    "labelType": "Complaint Type",
+    "typeOptions": [
+      { "value": "roads", "label": "Roads & Infrastructure" },
+      { "value": "health", "label": "Health & Environment" },
+      { "value": "lighting", "label": "Street Lighting" },
+      { "value": "other", "label": "Other" }
+    ],
+    "labelDesc": "Complaint Details",
+    "phDesc": "Describe the problem in detail...",
+    "labelUpload": "Attach Photo (Optional)",
+    "uploadText": "Click or drag files here",
+    "uploadHint": "JPG, PNG or PDF, up to 5MB per file",
+    "removeFile": "Remove file",
+    "submitBtn": "Submit Complaint",
+    "submitting": "Submitting...",
+    "mapTitle": "Location Selection",
+    "mapDesc": "Please pin the exact location of the issue for easier resolution.",
+    "mapAction": "Click the map to pinpoint the location",
+    "mapSelected": "Location selected",
+    "successTitle": "Your complaint was received",
+    "successDesc": "We'll be in touch soon. You can track the request status below.",
+    "trackStatusTitle": "Request Status",
+    "trackStatusVal": "Under Review",
+    "trackCodeTitle": "Tracking Code",
+    "trackSteps": [
+      { "title": "Received", "status": "" },
+      { "title": "Under Review", "status": "Current phase..." },
+      { "title": "In Progress", "status": "Next step" },
+      { "title": "Resolved", "status": "" }
+    ],
+    "newSubmission": "Submit another complaint",
+    "errorTitle": "Couldn't submit your complaint",
+    "errorGeneric": "Something went wrong. Please try again later.",
+    "errorMailNotConfigured": "Email delivery isn't configured on the server yet. Please contact us by phone for now.",
+    "validation": {
+      "nameRequired": "Please enter your full name",
+      "phoneRequired": "Please enter a valid phone number",
+      "descRequired": "Please describe the complaint (at least 10 characters)",
+      "fileTooLarge": "File size exceeds 5MB",
+      "fileType": "Unsupported file type"
+    }
+  },
+  "Contact": {
+    "metaDescription": "Get in touch with Amioun Municipality by phone, email, or the online contact form.",
+    "title": "Contact Us",
+    "subtitle": "We are here to serve you. Don't hesitate to reach out with any inquiry.",
+    "formTitle": "Send a Message",
+    "labelName": "Full Name",
+    "phName": "Your honorable name",
+    "labelEmail": "Email or Phone",
+    "phEmail": "To get in touch with you",
+    "labelMsg": "Message",
+    "phMsg": "Write your message here...",
+    "sendBtn": "Send",
+    "sending": "Sending...",
+    "infoPhone": "Phone Number",
+    "infoEmail": "Email Address",
+    "infoAddress": "Address",
+    "addressText": "Lebanon, North Governorate, Koura District, Amioun Main Municipal Building",
+    "successTitle": "Your message was sent",
+    "successDesc": "We'll get back to you as soon as possible.",
+    "sendAnother": "Send another message",
+    "errorTitle": "Couldn't send your message",
+    "errorGeneric": "Something went wrong. Please try again later.",
+    "errorMailNotConfigured": "Email delivery isn't configured on the server yet. Please contact us by phone for now.",
+    "validation": {
+      "nameRequired": "Please enter your name",
+      "contactRequired": "Please enter a valid email or phone number",
+      "messageRequired": "Please enter a message (at least 10 characters)"
+    }
+  },
+  "Digital": {
+    "metaDescription": "A forward-looking vision towards advanced, transparent, and smart municipal management.",
+    "badge": "Smart Management System",
+    "title1": "Digital",
+    "title2": "Municipality",
+    "desc": "Welcome to the smart digital transformation portal. We put technology at the service of citizens to streamline municipal transactions with the highest security standards.",
+    "sectionTitle": "Central E-Services",
+    "cards": [
+      { "title": "Citizen Portal", "desc": "Secure unified access to your profile, document extraction, and updating your civic records." },
+      { "title": "E-Building Permit", "desc": "Submit and track engineering permit requests and upload blueprints for digital approval." },
+      { "title": "Transaction Tracking", "desc": "Live tracking system to check your request status step by step with full transparency." },
+      { "title": "Online Payment", "desc": "Pay taxes, fees, and traffic violations through an encrypted, secure payment gateway." }
+    ],
+    "statsSubtitle": "Smart Municipality Data",
+    "statsTitle": "Digital Performance Indicators",
+    "stats": [
+      { "value": 15000, "prefix": "+", "suffix": "", "label": "Completed E-Transactions" },
+      { "value": 98, "prefix": "", "suffix": "%", "label": "Citizen Satisfaction Rate" },
+      { "value": 24, "prefix": "", "suffix": "/7", "label": "Digital Services Availability" }
+    ]
+  },
+  "News": {
+    "metaDescription": "Follow the latest updates, events, and announcements from Amioun town.",
+    "title": "Municipal News",
+    "subtitle": "Follow the latest updates, events, and announcements from Amioun town.",
+    "featuredBadge": "Featured Article",
+    "readTime": "{minutes} min read",
+    "readMore": "Read More",
+    "featured": {
+      "title": "Launch of Comprehensive Digital Transformation Project for Amioun Municipality",
+      "desc": "In a pioneering step towards the future, the Mayor of Amioun announced the start of Phase 1 of the 'Digital Municipality' project, enabling citizens to complete transactions online.",
+      "date": "2026-08-15",
+      "readMinutes": 3,
+      "image": "https://images.unsplash.com/photo-1577495508048-b635879837f1?q=80&w=1000&auto=format&fit=crop"
+    },
+    "items": [
+      {
+        "category": "Health Campaigns",
+        "title": "Free Child Vaccination Campaign at Municipal Clinic",
+        "desc": "The municipality invites all parents to bring their children to the clinic over the weekend.",
+        "date": "2026-08-10",
+        "image": "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=800&auto=format&fit=crop"
+      },
+      {
+        "category": "Environment",
+        "title": "Forest Cleanup and Large Tree Planting Drive",
+        "desc": "Dozens of volunteers participated in cleaning the olive groves surrounding Amioun.",
+        "date": "2026-08-05",
+        "image": "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=800&auto=format&fit=crop"
+      },
+      {
+        "category": "Administrative Decisions",
+        "title": "Adjustment of Municipal Building Working Hours",
+        "desc": "Per the new resolution, reception hours for physical applications will be extended.",
+        "date": "2026-08-01",
+        "image": "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=800&auto=format&fit=crop"
+      }
+    ]
+  },
+  "Projects": {
+    "metaDescription": "Towards a better Amioun: discover completed and ongoing projects aimed at developing infrastructure and public facilities.",
+    "title": "Municipal Projects",
+    "subtitle": "Towards a better Amioun: discover completed and ongoing projects aimed at developing infrastructure and public facilities.",
+    "filterAll": "All",
+    "filterDone": "Completed",
+    "filterProg": "In Progress",
+    "progressLabel": "Progress Rate",
+    "statusDone": "Completed",
+    "statusProg": "In Progress",
+    "noResults": "No projects in this category right now.",
+    "items": [
+      { "title": "Road Infrastructure Rehabilitation", "desc": "Comprehensive project to rehabilitate the road network in town center for smooth traffic.", "status": "progress", "progress": 70, "image": "https://images.unsplash.com/photo-1541888086425-d81bb19240f5?q=80&w=800&auto=format&fit=crop", "aspect": "4/3" },
+      { "title": "Solar Lighting Project", "desc": "Installation of over 300 solar-powered lights to save energy.", "status": "done", "progress": 100, "image": "https://images.unsplash.com/photo-1550986616-1f6b1e60dcbe?q=80&w=800&auto=format&fit=crop", "aspect": "4/5" },
+      { "title": "Public Park Development", "desc": "Creating additional green spaces, children's playgrounds, and smart benches.", "status": "progress", "progress": 30, "image": "https://images.unsplash.com/photo-1518005020951-eccb494ad742?q=80&w=800&auto=format&fit=crop", "aspect": "4/3" },
+      { "title": "Water Network Upgrade", "desc": "Replacing main pipelines and ensuring continuous clean water supply to all homes.", "status": "progress", "progress": 60, "image": "https://images.unsplash.com/photo-1553641171-0aa4ee0cae9a?q=80&w=800&auto=format&fit=crop", "aspect": "4/5" },
+      { "title": "Solid Waste Sorting Center", "desc": "Modern center for processing and sorting waste to protect the environment.", "status": "done", "progress": 100, "image": "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?q=80&w=800&auto=format&fit=crop", "aspect": "4/3" }
+    ]
+  }
+}
