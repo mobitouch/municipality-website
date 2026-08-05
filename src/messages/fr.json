@@ -17,7 +17,8 @@
     "contact": "Contactez-nous",
     "quickRequest": "Demande Rapide",
     "phone": "+961 6 123 456",
-    "email": "info@amioun.gov.lb"
+    "email": "info@amioun.gov.lb",
+    "track": "Suivre une Réclamation"
   },
   "Footer": {
     "desc": "Nous œuvrons à offrir les meilleurs services aux citoyens et à améliorer les infrastructures d'Amioun grâce à une plateforme numérique transparente et fiable.",
@@ -74,10 +75,26 @@
     "statComplaintsTag": "Excellente",
     "statComplaintsValue": 98,
     "cards": [
-      { "title": "Services aux Citoyens", "desc": "Soumettez vos demandes, obtenez vos documents et effectuez vos démarches en ligne.", "href": "/citizen-services" },
-      { "title": "Portail de Paiement", "desc": "Payer vos taxes et frais municipaux via un système de paiement en ligne sécurisé.", "href": "/digital-municipality" },
-      { "title": "Signaler un Problème", "desc": "Signalez les pannes et infractions et suivez l'avancement avec les équipes de maintenance.", "href": "/report-issue" },
-      { "title": "Projets", "desc": "Consultez les plans de développement et les étapes d'exécution des projets majeurs.", "href": "/projects" }
+      {
+        "title": "Services aux Citoyens",
+        "desc": "Soumettez vos demandes, obtenez vos documents et effectuez vos démarches en ligne.",
+        "href": "/citizen-services"
+      },
+      {
+        "title": "Portail de Paiement",
+        "desc": "Payer vos taxes et frais municipaux via un système de paiement en ligne sécurisé.",
+        "href": "/digital-municipality"
+      },
+      {
+        "title": "Signaler un Problème",
+        "desc": "Signalez les pannes et infractions et suivez l'avancement avec les équipes de maintenance.",
+        "href": "/report-issue"
+      },
+      {
+        "title": "Projets",
+        "desc": "Consultez les plans de développement et les étapes d'exécution des projets majeurs.",
+        "href": "/projects"
+      }
     ]
   },
   "About": {
@@ -86,17 +103,46 @@
     "subtitle": "Une riche histoire et un avenir lumineux. Découvrez l'histoire d'Amioun et son conseil municipal.",
     "historyTitle": "Aperçu Historique",
     "timeline": [
-      { "title": "Époques Anciennes", "desc": "Amioun est une ville historique ancienne remontant aux époques phénicienne et romaine, célèbre pour ses monuments." },
-      { "title": "Fondation de la Municipalité", "desc": "La municipalité d'Amioun a été créée au début du XXe siècle pour gérer les affaires publiques." },
-      { "title": "Transformation Numérique", "desc": "Lancement du projet de municipalité numérique pour offrir des services en ligne rapides et transparents." }
+      {
+        "title": "Époques Anciennes",
+        "desc": "Amioun est une ville historique ancienne remontant aux époques phénicienne et romaine, célèbre pour ses monuments."
+      },
+      {
+        "title": "Fondation de la Municipalité",
+        "desc": "La municipalité d'Amioun a été créée au début du XXe siècle pour gérer les affaires publiques."
+      },
+      {
+        "title": "Transformation Numérique",
+        "desc": "Lancement du projet de municipalité numérique pour offrir des services en ligne rapides et transparents."
+      }
     ],
     "councilTitle": "Conseil Municipal",
     "councilDesc": "Des membres dévoués travaillant ensemble au service du développement de la ville.",
     "members": [
-      { "name": "Ing. Ghassan Azar", "role": "Maire", "avatarSeed": "President", "avatarBg": "4A6635" },
-      { "name": "Dr. Fadi Ferzli", "role": "Adjoint au Maire", "avatarSeed": "Vice+President", "avatarBg": "8B5A2B" },
-      { "name": "Mme. Mary Abboud", "role": "Membre du Conseil", "avatarSeed": "Member+1", "avatarBg": "ddd" },
-      { "name": "M. Joseph El-Khoury", "role": "Membre du Conseil", "avatarSeed": "Member+2", "avatarBg": "ddd" }
+      {
+        "name": "Ing. Ghassan Azar",
+        "role": "Maire",
+        "avatarSeed": "President",
+        "avatarBg": "4A6635"
+      },
+      {
+        "name": "Dr. Fadi Ferzli",
+        "role": "Adjoint au Maire",
+        "avatarSeed": "Vice+President",
+        "avatarBg": "8B5A2B"
+      },
+      {
+        "name": "Mme. Mary Abboud",
+        "role": "Membre du Conseil",
+        "avatarSeed": "Member+1",
+        "avatarBg": "ddd"
+      },
+      {
+        "name": "M. Joseph El-Khoury",
+        "role": "Membre du Conseil",
+        "avatarSeed": "Member+2",
+        "avatarBg": "ddd"
+      }
     ]
   },
   "CitizenServices": {
@@ -109,18 +155,42 @@
     "categoriesTitle": "Catégories Principales",
     "explore": "Parcourir les services",
     "categories": [
-      { "title": "Affaires Immobilières et Techniques", "desc": "Permis de construire, attestations de zonage, morcellement et fusion, permis de rénovation." },
-      { "title": "Licences Commerciales", "desc": "Délivrance et renouvellement des licences pour commerces, industries et établissements de santé." },
-      { "title": "État Civil et Documents", "desc": "Attestations de résidence, permis de séjour et documents civils certifiés." },
-      { "title": "Santé et Environnement", "desc": "Certificats sanitaires, demandes de pulvérisation, élagage d'arbres et collecte des déchets." }
+      {
+        "title": "Affaires Immobilières et Techniques",
+        "desc": "Permis de construire, attestations de zonage, morcellement et fusion, permis de rénovation."
+      },
+      {
+        "title": "Licences Commerciales",
+        "desc": "Délivrance et renouvellement des licences pour commerces, industries et établissements de santé."
+      },
+      {
+        "title": "État Civil et Documents",
+        "desc": "Attestations de résidence, permis de séjour et documents civils certifiés."
+      },
+      {
+        "title": "Santé et Environnement",
+        "desc": "Certificats sanitaires, demandes de pulvérisation, élagage d'arbres et collecte des déchets."
+      }
     ],
     "guideTitle": "Comment Soumettre vos Demandes",
     "guideSubtitle": "Étapes simples pour effectuer vos démarches en ligne ou sur place",
     "steps": [
-      { "title": "Sélectionner le Service", "desc": "Recherchez le service souhaité et consultez les documents et frais." },
-      { "title": "Remplir la Demande", "desc": "Remplissez le formulaire électronique et téléchargez les pièces justificatives." },
-      { "title": "Paiement & Suivi", "desc": "Payez les frais via le portail sécurisé et suivez l'avancement." },
-      { "title": "Recevoir le Document", "desc": "Recevez votre document au format numérique ou physique à la municipalité." }
+      {
+        "title": "Sélectionner le Service",
+        "desc": "Recherchez le service souhaité et consultez les documents et frais."
+      },
+      {
+        "title": "Remplir la Demande",
+        "desc": "Remplissez le formulaire électronique et téléchargez les pièces justificatives."
+      },
+      {
+        "title": "Paiement & Suivi",
+        "desc": "Payez les frais via le portail sécurisé et suivez l'avancement."
+      },
+      {
+        "title": "Recevoir le Document",
+        "desc": "Recevez votre document au format numérique ou physique à la municipalité."
+      }
     ]
   },
   "ReportIssue": {
@@ -134,10 +204,22 @@
     "phPhone": "Entrez votre numéro",
     "labelType": "Type de Réclamation",
     "typeOptions": [
-      { "value": "roads", "label": "Routes & Infrastructure" },
-      { "value": "health", "label": "Santé & Environnement" },
-      { "value": "lighting", "label": "Éclairage Public" },
-      { "value": "other", "label": "Autre" }
+      {
+        "value": "roads",
+        "label": "Routes & Infrastructure"
+      },
+      {
+        "value": "health",
+        "label": "Santé & Environnement"
+      },
+      {
+        "value": "lighting",
+        "label": "Éclairage Public"
+      },
+      {
+        "value": "other",
+        "label": "Autre"
+      }
     ],
     "labelDesc": "Détails de la Réclamation",
     "phDesc": "Décrivez le problème en détail...",
@@ -157,10 +239,22 @@
     "trackStatusVal": "En Cours d'Examen",
     "trackCodeTitle": "Code de Suivi",
     "trackSteps": [
-      { "title": "Reçu", "status": "" },
-      { "title": "En Cours d'Examen", "status": "Phase actuelle..." },
-      { "title": "En Cours", "status": "Prochaine étape" },
-      { "title": "Résolu", "status": "" }
+      {
+        "title": "Reçu",
+        "status": ""
+      },
+      {
+        "title": "En Cours d'Examen",
+        "status": "Phase actuelle..."
+      },
+      {
+        "title": "En Cours",
+        "status": "Prochaine étape"
+      },
+      {
+        "title": "Résolu",
+        "status": ""
+      }
     ],
     "newSubmission": "Envoyer une nouvelle réclamation",
     "errorTitle": "Impossible d'envoyer la réclamation",
@@ -172,7 +266,8 @@
       "descRequired": "Veuillez décrire la réclamation (10 caractères minimum)",
       "fileTooLarge": "La taille du fichier dépasse 5 Mo",
       "fileType": "Type de fichier non pris en charge"
-    }
+    },
+    "trackLink": "Suivre ma Réclamation"
   },
   "Contact": {
     "metaDescription": "Contactez la Municipalité d'Amioun par téléphone, e-mail ou via le formulaire en ligne.",
@@ -211,17 +306,44 @@
     "desc": "Bienvenue sur le portail de transformation numérique intelligente. Nous mettons la technologie au service des citoyens pour faciliter toutes les démarches municipales.",
     "sectionTitle": "Services Électroniques Centraux",
     "cards": [
-      { "title": "Portail Citoyen", "desc": "Accès sécurisé et unifié à votre profil, extrait de documents et mise à jour de vos données civiles." },
-      { "title": "Permis de Construire Électronique", "desc": "Soumettre et suivre vos demandes de permis d'urbanisme et télécharger les plans pour approbation." },
-      { "title": "Suivi des Démarches", "desc": "Système de suivi en direct pour connaître l'avancement de vos demandes étape par étape." },
-      { "title": "Paiement Électronique", "desc": "Payer vos taxes, frais et infractions via un portail de paiement sécurisé et chiffré." }
+      {
+        "title": "Portail Citoyen",
+        "desc": "Accès sécurisé et unifié à votre profil, extrait de documents et mise à jour de vos données civiles."
+      },
+      {
+        "title": "Permis de Construire Électronique",
+        "desc": "Soumettre et suivre vos demandes de permis d'urbanisme et télécharger les plans pour approbation."
+      },
+      {
+        "title": "Suivi des Démarches",
+        "desc": "Système de suivi en direct pour connaître l'avancement de vos demandes étape par étape."
+      },
+      {
+        "title": "Paiement Électronique",
+        "desc": "Payer vos taxes, frais et infractions via un portail de paiement sécurisé et chiffré."
+      }
     ],
     "statsSubtitle": "Données de la Municipalité Intelligente",
     "statsTitle": "Indicateurs de Performance Numérique",
     "stats": [
-      { "value": 15000, "prefix": "+", "suffix": "", "label": "Démarches Électroniques Réalisées" },
-      { "value": 98, "prefix": "", "suffix": "%", "label": "Taux de Satisfaction des Citoyens" },
-      { "value": 24, "prefix": "", "suffix": "/7", "label": "Disponibilité des Services Numériques" }
+      {
+        "value": 15000,
+        "prefix": "+",
+        "suffix": "",
+        "label": "Démarches Électroniques Réalisées"
+      },
+      {
+        "value": 98,
+        "prefix": "",
+        "suffix": "%",
+        "label": "Taux de Satisfaction des Citoyens"
+      },
+      {
+        "value": 24,
+        "prefix": "",
+        "suffix": "/7",
+        "label": "Disponibilité des Services Numériques"
+      }
     ]
   },
   "News": {
@@ -274,11 +396,93 @@
     "statusProg": "En Cours",
     "noResults": "Aucun projet dans cette catégorie pour le moment.",
     "items": [
-      { "title": "Réhabilitation des Infrastructures Routières", "desc": "Projet global de réhabilitation du réseau routier au centre-ville pour un trafic fluide.", "status": "progress", "progress": 70, "image": "https://images.unsplash.com/photo-1541888086425-d81bb19240f5?q=80&w=800&auto=format&fit=crop", "aspect": "4/3" },
-      { "title": "Projet d'Éclairage Solaire", "desc": "Installation de plus de 300 lampadaires solaires pour économiser l'énergie.", "status": "done", "progress": 100, "image": "https://images.unsplash.com/photo-1550986616-1f6b1e60dcbe?q=80&w=800&auto=format&fit=crop", "aspect": "4/5" },
-      { "title": "Développement du Parc Public", "desc": "Création d'espaces verts supplémentaires, d'aires de jeux et de bancs intelligents.", "status": "progress", "progress": 30, "image": "https://images.unsplash.com/photo-1518005020951-eccb494ad742?q=80&w=800&auto=format&fit=crop", "aspect": "4/3" },
-      { "title": "Modernisation du Réseau d'Eau", "desc": "Remplacement des conduites principales et garantie d'un approvisionnement continu en eau propre.", "status": "progress", "progress": 60, "image": "https://images.unsplash.com/photo-1553641171-0aa4ee0cae9a?q=80&w=800&auto=format&fit=crop", "aspect": "4/5" },
-      { "title": "Centre de Tri des Déchets Solides", "desc": "Centre moderne de traitement et de tri des déchets pour protéger l'environnement.", "status": "done", "progress": 100, "image": "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?q=80&w=800&auto=format&fit=crop", "aspect": "4/3" }
+      {
+        "title": "Réhabilitation des Infrastructures Routières",
+        "desc": "Projet global de réhabilitation du réseau routier au centre-ville pour un trafic fluide.",
+        "status": "progress",
+        "progress": 70,
+        "image": "https://images.unsplash.com/photo-1541888086425-d81bb19240f5?q=80&w=800&auto=format&fit=crop",
+        "aspect": "4/3"
+      },
+      {
+        "title": "Projet d'Éclairage Solaire",
+        "desc": "Installation de plus de 300 lampadaires solaires pour économiser l'énergie.",
+        "status": "done",
+        "progress": 100,
+        "image": "https://images.unsplash.com/photo-1550986616-1f6b1e60dcbe?q=80&w=800&auto=format&fit=crop",
+        "aspect": "4/5"
+      },
+      {
+        "title": "Développement du Parc Public",
+        "desc": "Création d'espaces verts supplémentaires, d'aires de jeux et de bancs intelligents.",
+        "status": "progress",
+        "progress": 30,
+        "image": "https://images.unsplash.com/photo-1518005020951-eccb494ad742?q=80&w=800&auto=format&fit=crop",
+        "aspect": "4/3"
+      },
+      {
+        "title": "Modernisation du Réseau d'Eau",
+        "desc": "Remplacement des conduites principales et garantie d'un approvisionnement continu en eau propre.",
+        "status": "progress",
+        "progress": 60,
+        "image": "https://images.unsplash.com/photo-1553641171-0aa4ee0cae9a?q=80&w=800&auto=format&fit=crop",
+        "aspect": "4/5"
+      },
+      {
+        "title": "Centre de Tri des Déchets Solides",
+        "desc": "Centre moderne de traitement et de tri des déchets pour protéger l'environnement.",
+        "status": "done",
+        "progress": 100,
+        "image": "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?q=80&w=800&auto=format&fit=crop",
+        "aspect": "4/3"
+      }
     ]
+  },
+  "Track": {
+    "metaDescription": "Suivez l'état d'une réclamation ou d'une demande soumise à la Municipalité d'Amioun.",
+    "title": "Suivre Votre Réclamation",
+    "subtitle": "Entrez votre code de suivi ainsi que le téléphone ou l'email fourni lors de votre envoi pour vérifier son statut.",
+    "formTitle": "Vérifier le Statut",
+    "labelReference": "Code de Suivi",
+    "phReference": "ex. CMP-2026-0012",
+    "labelContact": "Téléphone ou Email",
+    "phContact": "Le téléphone ou l'email fourni lors de votre envoi",
+    "submitBtn": "Vérifier le Statut",
+    "submitting": "Vérification...",
+    "searchAnother": "Suivre une autre demande",
+    "errorTitle": "Demande introuvable",
+    "errorNotFound": "Aucune correspondance pour ce code et ces coordonnées. Vérifiez-les ou contactez-nous directement.",
+    "errorGeneric": "Une erreur s'est produite. Veuillez réessayer plus tard.",
+    "validation": {
+      "referenceRequired": "Veuillez entrer votre code de suivi",
+      "contactRequired": "Veuillez entrer le téléphone ou l'email fourni lors de votre envoi"
+    },
+    "resultReference": "Code de Suivi",
+    "resultCategory": "Catégorie",
+    "resultDepartment": "Service",
+    "resultSubmitted": "Soumis le",
+    "resultUpdated": "Dernière Mise à Jour",
+    "rejectedNote": "Cette demande a été examinée et clôturée. Contactez-nous pour toute question.",
+    "timelineTitle": "Historique",
+    "steps": {
+      "received": "Reçu",
+      "review": "En Cours d'Examen",
+      "progress": "En Cours",
+      "resolved": "Résolu"
+    },
+    "statuses": {
+      "New": "Nouveau",
+      "Under Review": "En Cours d'Examen",
+      "Assigned": "Assignée",
+      "In Progress": "En Cours",
+      "Resolved": "Résolu",
+      "Closed": "Clôturé",
+      "Rejected": "Rejetée"
+    },
+    "activity": {
+      "Request submitted": "Demande soumise",
+      "Status changed": "Statut mis à jour",
+      "Department assigned": "Transmise au service concerné"
+    }
   }
 }

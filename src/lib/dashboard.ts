@@ -13,6 +13,25 @@ export interface DashboardForwardResult {
   referenceNumber?: string;
 }
 
+export interface DashboardTrackingEvent {
+  action: string;
+  detail: string;
+  timestamp: string;
+}
+
+export interface DashboardTrackingStatus {
+  referenceNumber: string;
+  kind: "request" | "complaint";
+  category: string;
+  departmentName: string | null;
+  status: string;
+  priority: string;
+  dateSubmitted: string;
+  updatedAt: string;
+  resolvedAt: string | null;
+  timeline: DashboardTrackingEvent[];
+}
+
 /**
  * Forwards a form submission to the staff dashboard's own /api/requests
  * endpoint (a separate Next.js app) so it shows up live for municipal staff.
@@ -54,5 +73,41 @@ export async function forwardToDashboard(
   } catch (error) {
     console.error("dashboard forward failed", error);
     return { ok: false };
+  }
+}
+
+/**
+ * Looks up a citizen's complaint/request status on the dashboard by
+ * reference number + the phone or email on file. Returns null both when
+ * the dashboard integration isn't configured and when the dashboard says
+ * "not found" — callers can't distinguish those, which is fine since both
+ * cases should just tell the citizen the tracker is unavailable/no match.
+ */
+export async function lookupTrackingStatus(
+  reference: string,
+  contact: string,
+): Promise<DashboardTrackingStatus | null> {
+  const baseUrl = process.env.DASHBOARD_API_URL;
+  const apiKey = process.env.DASHBOARD_API_KEY;
+
+  if (!baseUrl || !apiKey) return null;
+
+  try {
+    const url = new URL(`${baseUrl.replace(/\/+$/, "")}/api/track`);
+    url.searchParams.set("reference", reference);
+    url.searchParams.set("contact", contact);
+
+    const res = await fetch(url, {
+      headers: { "x-api-key": apiKey },
+      signal: AbortSignal.timeout(8000),
+    });
+
+    if (!res.ok) return null;
+
+    const data = (await res.json().catch(() => null)) as { status?: DashboardTrackingStatus } | null;
+    return data?.status ?? null;
+  } catch (error) {
+    console.error("dashboard tracking lookup failed", error);
+    return null;
   }
 }

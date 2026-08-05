@@ -30,6 +30,13 @@ export const reportIssueSchema = z.object({
 
 export type ReportIssueInput = z.infer<typeof reportIssueSchema>;
 
+export const trackSchema = z.object({
+  reference: z.string().trim().min(3).max(40),
+  contact: z.string().trim().min(3).max(160),
+});
+
+export type TrackInput = z.infer<typeof trackSchema>;
+
 export const MAX_FILE_SIZE = 5 * 1024 * 1024;
 export const MAX_TOTAL_FILES_SIZE = 15 * 1024 * 1024;
 export const ALLOWED_FILE_TYPES = ["image/jpeg", "image/png", "image/webp", "application/pdf"];

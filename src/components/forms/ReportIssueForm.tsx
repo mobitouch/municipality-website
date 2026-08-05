@@ -11,8 +11,10 @@ import {
   FaCircleExclamation,
   FaCloudArrowUp,
   FaLocationDot,
+  FaMagnifyingGlass,
   FaXmark,
 } from "react-icons/fa6";
+import { Link } from "@/i18n/navigation";
 import {
   ALLOWED_FILE_TYPES,
   MAX_FILE_SIZE,
@@ -155,13 +157,22 @@ export function ReportIssueForm({ typeOptions }: { typeOptions: ComplaintTypeOpt
           </div>
         </div>
 
-        <button
-          type="button"
-          onClick={() => setStatus("idle")}
-          className="w-full rounded-xl border-2 border-koura-primary py-3 font-bold text-koura-primary transition-colors hover:bg-koura-primary hover:text-white dark:border-[#D4AF37] dark:text-[#D4AF37] dark:hover:bg-[#D4AF37] dark:hover:text-black"
-        >
-          {t("newSubmission")}
-        </button>
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <Link
+            href="/track"
+            className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-koura-primary py-3 font-bold text-white transition-colors hover:bg-koura-secondary dark:bg-[#D4AF37] dark:text-black dark:hover:bg-[#84cc16]"
+          >
+            <FaMagnifyingGlass />
+            {t("trackLink")}
+          </Link>
+          <button
+            type="button"
+            onClick={() => setStatus("idle")}
+            className="flex-1 rounded-xl border-2 border-koura-primary py-3 font-bold text-koura-primary transition-colors hover:bg-koura-primary hover:text-white dark:border-[#D4AF37] dark:text-[#D4AF37] dark:hover:bg-[#D4AF37] dark:hover:text-black"
+          >
+            {t("newSubmission")}
+          </button>
+        </div>
       </div>
     );
   }

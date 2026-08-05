@@ -11,6 +11,7 @@ const NAV_LINKS = [
   { href: "/digital-municipality", key: "digital" },
   { href: "/citizen-services", key: "services" },
   { href: "/report-issue", key: "complaints" },
+  { href: "/track", key: "track" },
   { href: "/projects", key: "projects" },
   { href: "/news", key: "news" },
   { href: "/about", key: "about" },
