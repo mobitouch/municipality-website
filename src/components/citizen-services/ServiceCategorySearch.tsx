@@ -8,11 +8,16 @@ import { TiltCard } from "@/components/shared/TiltCard";
 import type { ServiceCategory } from "@/types/content";
 
 const ICONS = [FaCity, FaStore, FaIdCard, FaLeaf];
+// Icon foreground colors are chosen for contrast, not just brand match: a
+// gold-on-white or bright-green-on-white icon reads under 2.2:1 (WCAG
+// requires 3:1+ for graphical objects), so those two accents use the dark
+// neutral text color instead — the tinted background/border still carries
+// the per-category color cue.
 const ACCENTS = [
-  "border-koura-primary/20 bg-koura-primary/5 text-koura-primary group-hover:bg-koura-primary dark:group-hover:text-black",
-  "border-koura-secondary/20 bg-koura-secondary/5 text-koura-secondary group-hover:bg-koura-secondary dark:group-hover:text-black",
-  "border-koura-accent/20 bg-koura-accent/5 text-koura-primary group-hover:bg-koura-primary dark:group-hover:text-black",
-  "border-[#25D366]/20 bg-[#25D366]/5 text-[#25D366] group-hover:bg-[#25D366] dark:group-hover:text-black",
+  "border-koura-primary/20 bg-koura-primary/5 text-koura-primary group-hover:bg-koura-primary group-hover:text-white dark:group-hover:text-black",
+  "border-koura-secondary/20 bg-koura-secondary/5 text-koura-text group-hover:bg-koura-secondary group-hover:text-koura-text dark:text-white dark:group-hover:text-black",
+  "border-koura-accent/20 bg-koura-accent/5 text-koura-primary group-hover:bg-koura-primary group-hover:text-white dark:group-hover:text-black",
+  "border-[#25D366]/20 bg-[#25D366]/5 text-koura-text group-hover:bg-[#25D366] group-hover:text-koura-text dark:text-white dark:group-hover:text-black",
 ];
 const HOVER_BORDER = [
   "hover:border-koura-primary",
@@ -42,7 +47,7 @@ export function ServiceCategorySearch({
     <>
       <div className="group relative mx-auto max-w-3xl">
         <div className="absolute inset-0 rounded-full bg-koura-primary/20 blur-xl transition-colors duration-300 group-hover:bg-koura-primary/30 dark:bg-[#D4AF37]/20 dark:group-hover:bg-[#D4AF37]/30" />
-        <div className="relative flex items-center rounded-full border border-white/50 bg-white/80 p-2 shadow-2xl backdrop-blur-xl transition-all dark:border-white/10 dark:bg-white/5">
+        <div className="relative flex items-center rounded-full border border-white/50 bg-white/80 p-2 shadow-2xl backdrop-blur-xl transition-all focus-within:ring-2 focus-within:ring-koura-primary focus-within:ring-offset-2 dark:border-white/10 dark:bg-white/5 dark:focus-within:ring-[#D4AF37] dark:focus-within:ring-offset-black">
           <FaMagnifyingGlass className="ms-4 text-xl text-gray-400 dark:text-gray-500" />
           <input
             type="text"
@@ -60,7 +65,7 @@ export function ServiceCategorySearch({
         </div>
       </div>
 
-      <section className="relative z-20 container mx-auto px-4 py-20">
+      <section className="relative z-20 container mx-auto px-4 py-20 sm:px-6 lg:px-8 xl:px-12">
         {filtered.length === 0 ? (
           <p className="text-center font-medium text-gray-500 dark:text-gray-400">{labels.searchEmpty}</p>
         ) : (

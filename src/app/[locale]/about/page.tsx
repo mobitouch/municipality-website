@@ -8,10 +8,15 @@ import { TiltCard } from "@/components/shared/TiltCard";
 import type { CouncilMember, TimelineItem } from "@/types/content";
 
 const TIMELINE_ICONS = [FaLandmark, FaBuildingColumns, FaLaptopCode];
-const TIMELINE_COLORS = [
-  "bg-koura-primary text-koura-primary",
-  "bg-koura-secondary text-koura-secondary",
-  "bg-[#25D366] text-[#25D366]",
+// dotIcon is chosen per dotBg for contrast: white reads fine on the dark
+// primary green, but fails WCAG (~2:1) on the lighter gold/bright-green
+// dots, so those use the dark neutral text color instead. Headings stay on
+// koura-primary throughout — gold/bright-green text on a white card also
+// falls under the 4.5:1 minimum for body-sized text.
+const TIMELINE_STYLES = [
+  { dotBg: "bg-koura-primary", dotIcon: "text-white" },
+  { dotBg: "bg-koura-secondary", dotIcon: "text-koura-text" },
+  { dotBg: "bg-[#25D366]", dotIcon: "text-koura-text" },
 ];
 
 export async function generateMetadata({
@@ -44,7 +49,7 @@ export default async function AboutPage({
           <div className="absolute inset-0 bg-gradient-to-b from-koura-bg/80 via-koura-bg/90 to-koura-bg dark:from-[#050505]/80 dark:via-[#050505]/95 dark:to-[#050505]" />
         </div>
 
-        <RevealOnScroll once className="relative z-10 mt-20 container mx-auto px-4 text-center">
+        <RevealOnScroll once className="relative z-10 mt-20 container mx-auto px-4 text-center sm:px-6 lg:px-8 xl:px-12">
           <h1 className="mb-6 text-4xl font-black text-koura-primary md:text-6xl dark:text-[#D4AF37] dark:drop-shadow-[0_0_20px_rgba(212,175,53,0.4)]">
             {t("title")}
           </h1>
@@ -55,7 +60,7 @@ export default async function AboutPage({
       </section>
 
       {/* Timeline */}
-      <section className="relative z-20 container mx-auto px-4 py-20">
+      <section className="relative z-20 container mx-auto px-4 py-20 sm:px-6 lg:px-8 xl:px-12">
         <SectionHeading title={t("historyTitle")} />
 
         <div className="relative mx-auto max-w-4xl">
@@ -63,7 +68,7 @@ export default async function AboutPage({
 
           {timeline.map((item, i) => {
             const Icon = TIMELINE_ICONS[i];
-            const [dotBg, textColor] = TIMELINE_COLORS[i].split(" ");
+            const { dotBg, dotIcon } = TIMELINE_STYLES[i];
             const alignEnd = i % 2 === 0;
             return (
               <RevealOnScroll
@@ -75,12 +80,12 @@ export default async function AboutPage({
               >
                 <div className={`flex w-full justify-center md:w-5/12 ${alignEnd ? "md:justify-end" : "md:justify-start"}`}>
                   <div className="rounded-3xl border border-white/50 bg-white/80 p-8 text-center shadow-xl backdrop-blur-xl transition-colors md:text-start dark:border-white/10 dark:bg-white/5">
-                    <h3 className={`mb-2 text-xl font-bold ${textColor} dark:text-[#D4AF37]`}>{item.title}</h3>
+                    <h3 className="mb-2 text-xl font-bold text-koura-primary dark:text-[#D4AF37]">{item.title}</h3>
                     <p className="text-sm font-medium text-gray-600 dark:text-gray-400">{item.desc}</p>
                   </div>
                 </div>
                 <div
-                  className={`z-10 my-6 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-4 border-white text-white shadow-lg md:my-0 dark:border-[#050505] dark:bg-[#D4AF37] dark:text-black ${dotBg}`}
+                  className={`z-10 my-6 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-4 border-white shadow-lg md:my-0 dark:border-[#050505] dark:bg-[#D4AF37] dark:text-black ${dotBg} ${dotIcon}`}
                 >
                   <Icon />
                 </div>
@@ -92,7 +97,7 @@ export default async function AboutPage({
       </section>
 
       {/* Council */}
-      <section className="relative z-20 container mx-auto px-4 py-20">
+      <section className="relative z-20 container mx-auto px-4 py-20 sm:px-6 lg:px-8 xl:px-12">
         <SectionHeading title={t("councilTitle")} subtitle={t("councilDesc")} />
 
         <StaggerGroup className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">

@@ -29,7 +29,7 @@ export function Footer() {
     <footer className="relative overflow-hidden border-t-4 border-koura-primary bg-[#2C3325] pt-20 pb-10 text-white transition-colors dark:border-t dark:border-white/10 dark:bg-black">
       <div className="pointer-events-none absolute top-0 end-0 h-64 w-64 rounded-full bg-koura-primary/20 blur-[80px] dark:bg-[#D4AF37]/10" />
 
-      <div className="relative z-10 container mx-auto px-4">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         <div className="mb-16 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <div className="mb-6 flex items-center gap-4">

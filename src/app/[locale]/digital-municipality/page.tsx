@@ -7,9 +7,12 @@ import { TiltCard } from "@/components/shared/TiltCard";
 import type { DigitalCard, DigitalStat } from "@/types/content";
 
 const CARD_ICONS = [FaFingerprint, FaFileSignature, FaSatelliteDish, FaWallet];
+// Gold text/icon on a white or gold background reads under 2.2:1 contrast
+// (WCAG needs 3:1+ for graphical objects), so that accent uses the dark
+// neutral text color in both states instead of gold-on-gold.
 const CARD_ACCENTS = [
   "bg-koura-primary/10 text-koura-primary group-hover:bg-koura-primary group-hover:text-white",
-  "bg-koura-secondary/10 text-koura-secondary group-hover:bg-koura-secondary group-hover:text-white",
+  "bg-koura-secondary/10 text-koura-text group-hover:bg-koura-secondary group-hover:text-koura-text dark:text-[#D4AF37] dark:group-hover:text-black",
   "bg-red-50 text-red-500 group-hover:bg-red-500 group-hover:text-white",
   "bg-koura-accent/20 text-koura-primary group-hover:bg-koura-primary group-hover:text-white",
 ];
@@ -50,7 +53,7 @@ export default async function DigitalMunicipalityPage({
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white via-koura-bg to-koura-bg dark:from-[#D4AF37]/10 dark:via-[#050505]/80 dark:to-[#050505]" />
         </div>
 
-        <RevealOnScroll once className="relative z-10 container mx-auto px-4 text-center">
+        <RevealOnScroll once className="relative z-10 container mx-auto px-4 text-center sm:px-6 lg:px-8 xl:px-12">
           <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-koura-primary/30 bg-koura-primary/10 px-4 py-1 text-xs font-bold tracking-widest text-koura-primary shadow-sm dark:border-[#D4AF37]/30 dark:bg-[#D4AF37]/10 dark:text-[#D4AF37] dark:shadow-[0_0_15px_rgba(212,175,53,0.2)]">
             <FaMicrochip />
             {t("badge")}
@@ -64,7 +67,7 @@ export default async function DigitalMunicipalityPage({
         </RevealOnScroll>
       </section>
 
-      <section className="relative z-20 container mx-auto px-4 py-20">
+      <section className="relative z-20 container mx-auto px-4 py-20 sm:px-6 lg:px-8 xl:px-12">
         <div className="mb-12 flex items-center gap-4">
           <div className="h-8 w-2 rounded-full bg-koura-primary shadow-sm dark:bg-[#D4AF37] dark:shadow-[0_0_10px_rgba(212,175,53,1)]" />
           <h2 className="text-3xl font-bold text-koura-text dark:text-white">{t("sectionTitle")}</h2>
@@ -95,7 +98,7 @@ export default async function DigitalMunicipalityPage({
         </StaggerGroup>
       </section>
 
-      <section className="container mx-auto px-4 pb-32">
+      <section className="container mx-auto px-4 pb-32 sm:px-6 lg:px-8 xl:px-12">
         <RevealOnScroll className="relative overflow-hidden rounded-3xl border border-white/50 bg-white/80 p-10 shadow-xl backdrop-blur-xl transition-all duration-300 md:p-16 dark:border-white/10 dark:bg-white/5 dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
           <div className="pointer-events-none absolute top-1/2 left-1/2 h-full w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-full bg-koura-primary/5 blur-[100px] dark:bg-[#D4AF37]/5" />
 

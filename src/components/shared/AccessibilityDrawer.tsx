@@ -73,7 +73,7 @@ export function AccessibilityDrawer() {
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label={t("close")}
-                className="flex h-8 w-8 items-center justify-center rounded-full text-gray-400 transition-colors hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-900/20"
+                className="flex h-11 w-11 items-center justify-center rounded-full text-gray-400 transition-colors hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-900/20"
               >
                 <FaXmark className="text-lg" />
               </button>
@@ -89,14 +89,14 @@ export function AccessibilityDrawer() {
                     type="button"
                     onClick={() => setTextSize((s) => Math.min(MAX_SIZE, s + STEP))}
                     aria-label={t("increase")}
-                    className="flex-1 rounded-lg py-2 font-bold text-koura-text transition-colors hover:bg-white dark:text-white dark:hover:bg-white/10"
+                    className="flex h-11 flex-1 items-center justify-center rounded-lg font-bold text-koura-text transition-colors hover:bg-white dark:text-white dark:hover:bg-white/10"
                   >
                     <FaPlus />
                   </button>
                   <button
                     type="button"
                     onClick={() => setTextSize(DEFAULT_SIZE)}
-                    className="flex-1 rounded-lg py-2 text-sm font-bold text-koura-text transition-colors hover:bg-white dark:text-white dark:hover:bg-white/10"
+                    className="flex h-11 flex-1 items-center justify-center rounded-lg text-sm font-bold text-koura-text transition-colors hover:bg-white dark:text-white dark:hover:bg-white/10"
                   >
                     {t("default")}
                   </button>
@@ -104,7 +104,7 @@ export function AccessibilityDrawer() {
                     type="button"
                     onClick={() => setTextSize((s) => Math.max(MIN_SIZE, s - STEP))}
                     aria-label={t("decrease")}
-                    className="flex-1 rounded-lg py-2 font-bold text-koura-text transition-colors hover:bg-white dark:text-white dark:hover:bg-white/10"
+                    className="flex h-11 flex-1 items-center justify-center rounded-lg font-bold text-koura-text transition-colors hover:bg-white dark:text-white dark:hover:bg-white/10"
                   >
                     <FaMinus />
                   </button>
@@ -147,22 +147,22 @@ function ToggleRow({
   onChange: (value: boolean) => void;
 }) {
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-3 text-sm font-bold text-gray-700 dark:text-gray-300">
-        <div className={`flex h-8 w-8 items-center justify-center rounded-full ${iconWrapClass}`}>
+    <label className="-mx-2 flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-xl px-2 transition-colors hover:bg-gray-50 dark:hover:bg-white/5">
+      <span className="flex items-center gap-3 text-sm font-bold text-gray-700 dark:text-gray-300">
+        <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${iconWrapClass}`}>
           {icon}
-        </div>
+        </span>
         {label}
-      </div>
-      <label className="relative inline-flex cursor-pointer items-center">
+      </span>
+      <span className="relative inline-flex shrink-0 items-center">
         <input
           type="checkbox"
           checked={checked}
           onChange={(e) => onChange(e.target.checked)}
           className="peer sr-only"
         />
-        <div className="peer h-6 w-11 rounded-full bg-gray-300 transition-all peer-checked:bg-koura-primary peer-focus:outline-none after:absolute after:top-[2px] after:start-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full dark:bg-gray-700 dark:peer-checked:bg-[#D4AF37]" />
-      </label>
-    </div>
+        <span className="peer h-6 w-11 rounded-full bg-gray-300 transition-all peer-checked:bg-koura-primary peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-koura-primary after:absolute after:top-[2px] after:start-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full dark:bg-gray-700 dark:peer-checked:bg-[#D4AF37]" />
+      </span>
+    </label>
   );
 }

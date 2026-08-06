@@ -27,7 +27,7 @@ export default async function ContactPage({
 
   return (
     <div className="pb-24">
-      <section className="px-4 pt-32 pb-16">
+      <section className="px-4 pt-32 pb-16 sm:px-6 lg:px-8 xl:px-12">
         <RevealOnScroll once className="container mx-auto text-center">
           <h1 className="mb-6 text-4xl font-black text-koura-primary md:text-6xl dark:text-[#D4AF37] dark:drop-shadow-[0_0_20px_rgba(212,175,53,0.4)]">
             {t("title")}
@@ -36,7 +36,7 @@ export default async function ContactPage({
         </RevealOnScroll>
       </section>
 
-      <section className="relative z-20 container mx-auto px-4">
+      <section className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         <div className="mb-16 flex flex-col gap-12 lg:flex-row">
           <RevealOnScroll y={0} className="w-full lg:w-1/2">
             <div className="relative overflow-hidden rounded-3xl border border-white/50 bg-white/80 p-8 shadow-xl backdrop-blur-xl transition-colors md:p-12 dark:border-white/10 dark:bg-white/5 dark:shadow-[0_10px_40px_rgba(212,175,53,0.1)]">
@@ -60,7 +60,7 @@ export default async function ContactPage({
 
             <RevealOnScroll delay={0.2}>
               <TiltCard max={5} className="flex items-center gap-6 rounded-3xl border border-gray-100 bg-white/80 p-6 shadow-lg backdrop-blur-xl transition-colors duration-300 dark:border-white/10 dark:bg-[#111]">
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-koura-secondary/10 text-3xl text-koura-secondary dark:bg-[#D4AF37]/10 dark:text-[#D4AF37]">
+                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-koura-secondary/10 text-3xl text-koura-text dark:bg-[#D4AF37]/10 dark:text-[#D4AF37]">
                   <FaEnvelope />
                 </div>
                 <div>

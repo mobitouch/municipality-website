@@ -57,7 +57,7 @@ export function LanguageSwitcher() {
         aria-haspopup="menu"
         aria-expanded={open}
         aria-label={t("label")}
-        className="flex items-center gap-1.5 rounded-lg px-1 py-1 text-xs font-bold tracking-wide text-white/90 transition-colors hover:text-koura-accent dark:hover:text-[#D4AF37]"
+        className="flex h-11 items-center gap-1.5 rounded-lg px-2 text-xs font-bold tracking-wide text-white/90 transition-colors hover:text-koura-accent dark:hover:text-[#D4AF37]"
       >
         <FaGlobe className="text-koura-accent dark:text-[#D4AF37]" />
         <span>{t(locale)}</span>

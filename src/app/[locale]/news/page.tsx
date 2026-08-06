@@ -29,14 +29,14 @@ export default async function NewsPage({
 
   return (
     <div className="pb-24">
-      <section className="border-b border-gray-200 px-4 pt-32 pb-16 dark:border-white/10">
+      <section className="border-b border-gray-200 px-4 pt-32 pb-16 sm:px-6 lg:px-8 xl:px-12 dark:border-white/10">
         <RevealOnScroll once className="container mx-auto text-center">
           <h1 className="mb-6 text-4xl font-black text-koura-primary md:text-6xl dark:text-[#D4AF37]">{t("title")}</h1>
           <p className="mx-auto max-w-2xl text-lg font-medium text-gray-600 dark:text-gray-400">{t("subtitle")}</p>
         </RevealOnScroll>
       </section>
 
-      <section className="relative z-20 container mx-auto mt-16 px-4">
+      <section className="relative z-20 container mx-auto mt-16 px-4 sm:px-6 lg:px-8 xl:px-12">
         <RevealOnScroll once className="group mb-16 flex flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-2xl transition-colors duration-300 lg:flex-row dark:border-white/10 dark:bg-white/5">
           <div className="relative h-64 w-full overflow-hidden lg:h-auto lg:w-1/2">
             <Image
@@ -76,7 +76,7 @@ export default async function NewsPage({
                 />
               </div>
               <div className="flex flex-grow flex-col p-6">
-                <div className="mb-3 text-xs font-bold text-koura-secondary dark:text-[#D4AF37]">{item.category}</div>
+                <div className="mb-3 text-xs font-bold text-koura-primary dark:text-[#D4AF37]">{item.category}</div>
                 <h3 className="mb-3 text-xl font-bold text-koura-text transition-colors group-hover:text-koura-primary dark:text-white dark:group-hover:text-[#D4AF37]">
                   {item.title}
                 </h3>

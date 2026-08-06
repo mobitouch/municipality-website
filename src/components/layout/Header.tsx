@@ -23,7 +23,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/80 backdrop-blur-md transition-all duration-300 dark:border-white/10 dark:bg-[#050505]/80">
-      <div className="hidden bg-koura-primary px-4 py-2 text-xs text-white transition-colors duration-300 md:block">
+      <div className="hidden bg-koura-primary px-4 py-2 text-xs text-white transition-colors duration-300 sm:px-6 lg:px-8 xl:px-12 md:block">
         <div className="container mx-auto flex w-full items-center justify-between gap-4">
           <div className="flex items-center gap-6 font-medium text-white/90">
             <span className="flex items-center gap-2">
@@ -44,7 +44,7 @@ export function Header() {
         </div>
       </div>
 
-      <div className="container mx-auto flex w-full items-center justify-between gap-6 px-4 py-3">
+      <div className="container mx-auto flex w-full items-center justify-between gap-6 px-4 py-3 sm:px-6 lg:px-8 xl:px-12">
         <Link href="/" className="group flex shrink-0 items-center gap-4">
           <Image
             src="/images/logo.jpeg"
@@ -57,13 +57,13 @@ export function Header() {
             <h1 className="text-2xl font-black tracking-tight text-koura-primary dark:text-white">
               {t("brandName")}
             </h1>
-            <span className="mt-0.5 block text-[11px] font-bold tracking-widest text-koura-secondary uppercase dark:text-[#D4AF37]">
+            <span className="mt-0.5 block text-[11px] font-bold tracking-widest text-koura-primary uppercase dark:text-[#D4AF37]">
               {t("brandSub")}
             </span>
           </div>
         </Link>
 
-        <nav className="hidden items-center gap-7 text-[14px] font-bold tracking-wide text-koura-text lg:flex dark:text-gray-300">
+        <nav className="hidden items-center gap-6 text-[14px] font-bold tracking-wide text-koura-text xl:flex dark:text-gray-300">
           {NAV_LINKS.map(({ href, key }) => (
             <Link
               key={href}

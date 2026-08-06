@@ -55,7 +55,7 @@ export function MobileNav() {
         type="button"
         onClick={() => setOpen(true)}
         aria-label={tMenu("open")}
-        className="rounded-lg border border-transparent p-2 text-2xl text-koura-primary transition-colors hover:border-gray-200 hover:bg-koura-bg lg:hidden dark:text-[#D4AF37] dark:hover:border-white/10 dark:hover:bg-white/5"
+        className="rounded-lg border border-transparent p-2 text-2xl text-koura-primary transition-colors hover:border-gray-200 hover:bg-koura-bg xl:hidden dark:text-[#D4AF37] dark:hover:border-white/10 dark:hover:bg-white/5"
       >
         <FaBars />
       </button>
@@ -93,7 +93,7 @@ export function MobileNav() {
                       <h2 className="text-lg font-black text-koura-primary dark:text-white">
                         {tNav("brandName")}
                       </h2>
-                      <span className="block text-[10px] font-bold tracking-widest text-koura-secondary uppercase dark:text-[#D4AF37]">
+                      <span className="block text-[10px] font-bold tracking-widest text-koura-primary uppercase dark:text-[#D4AF37]">
                         {tNav("brandSub")}
                       </span>
                     </div>

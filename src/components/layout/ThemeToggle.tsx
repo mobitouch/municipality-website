@@ -17,7 +17,7 @@ export function ThemeToggle() {
       type="button"
       onClick={() => setTheme(isDark ? "light" : "dark")}
       aria-label={isDark ? t("toLight") : t("toDark")}
-      className="flex h-6 w-6 items-center justify-center text-white transition-colors hover:text-koura-accent dark:hover:text-[#D4AF37]"
+      className="flex h-11 w-11 items-center justify-center text-white transition-colors hover:text-koura-accent dark:hover:text-[#D4AF37]"
     >
       {resolvedTheme ? isDark ? <FaSun className="text-lg drop-shadow-md" /> : <FaMoon className="text-lg drop-shadow-md" /> : null}
     </button>
