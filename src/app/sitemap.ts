@@ -10,6 +10,7 @@ const ROUTES = [
   "/citizen-services",
   "/report-issue",
   "/digital-municipality",
+  "/track",
 ];
 
 const BASE_URL = "https://amioun.gov.lb";

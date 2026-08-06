@@ -69,37 +69,69 @@ export function ContactForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="relative z-10 space-y-6" noValidate>
       <div className="space-y-2">
-        <label className="text-sm font-bold text-gray-700 dark:text-gray-300">{t("labelName")}</label>
+        <label htmlFor="contact-name" className="text-sm font-bold text-gray-700 dark:text-gray-300">
+          {t("labelName")} <span className="text-red-500">*</span>
+        </label>
         <input
+          id="contact-name"
           type="text"
+          autoComplete="name"
           {...register("name")}
           placeholder={t("phName")}
+          aria-required="true"
+          aria-invalid={!!errors.name}
+          aria-describedby={errors.name ? "contact-name-error" : undefined}
           className="w-full rounded-xl border-2 border-gray-200 bg-transparent px-4 py-3 text-koura-text outline-none transition-colors focus:border-koura-primary dark:border-white/10 dark:text-white dark:focus:border-[#D4AF37] dark:focus:shadow-[0_0_15px_rgba(212,175,53,0.3)]"
         />
-        {errors.name && <p className="text-xs font-medium text-red-500">{t("validation.nameRequired")}</p>}
+        {errors.name && (
+          <p id="contact-name-error" role="alert" className="text-xs font-medium text-red-500">
+            {t("validation.nameRequired")}
+          </p>
+        )}
       </div>
 
       <div className="space-y-2">
-        <label className="text-sm font-bold text-gray-700 dark:text-gray-300">{t("labelEmail")}</label>
+        <label htmlFor="contact-contact" className="text-sm font-bold text-gray-700 dark:text-gray-300">
+          {t("labelEmail")} <span className="text-red-500">*</span>
+        </label>
         <input
+          id="contact-contact"
           type="text"
           dir="ltr"
+          autoComplete="email"
           {...register("contact")}
           placeholder={t("phEmail")}
+          aria-required="true"
+          aria-invalid={!!errors.contact}
+          aria-describedby={errors.contact ? "contact-contact-error" : undefined}
           className="w-full rounded-xl border-2 border-gray-200 bg-transparent px-4 py-3 text-koura-text outline-none transition-colors focus:border-koura-primary dark:border-white/10 dark:text-white dark:focus:border-[#D4AF37] dark:focus:shadow-[0_0_15px_rgba(212,175,53,0.3)]"
         />
-        {errors.contact && <p className="text-xs font-medium text-red-500">{t("validation.contactRequired")}</p>}
+        {errors.contact && (
+          <p id="contact-contact-error" role="alert" className="text-xs font-medium text-red-500">
+            {t("validation.contactRequired")}
+          </p>
+        )}
       </div>
 
       <div className="space-y-2">
-        <label className="text-sm font-bold text-gray-700 dark:text-gray-300">{t("labelMsg")}</label>
+        <label htmlFor="contact-message" className="text-sm font-bold text-gray-700 dark:text-gray-300">
+          {t("labelMsg")} <span className="text-red-500">*</span>
+        </label>
         <textarea
+          id="contact-message"
           rows={4}
           {...register("message")}
           placeholder={t("phMsg")}
+          aria-required="true"
+          aria-invalid={!!errors.message}
+          aria-describedby={errors.message ? "contact-message-error" : undefined}
           className="w-full resize-none rounded-xl border-2 border-gray-200 bg-transparent px-4 py-3 text-koura-text outline-none transition-colors focus:border-koura-primary dark:border-white/10 dark:text-white dark:focus:border-[#D4AF37] dark:focus:shadow-[0_0_15px_rgba(212,175,53,0.3)]"
         />
-        {errors.message && <p className="text-xs font-medium text-red-500">{t("validation.messageRequired")}</p>}
+        {errors.message && (
+          <p id="contact-message-error" role="alert" className="text-xs font-medium text-red-500">
+            {t("validation.messageRequired")}
+          </p>
+        )}
       </div>
 
       {/* Honeypot — hidden from real users, bots often fill every field */}

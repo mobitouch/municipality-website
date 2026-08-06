@@ -182,31 +182,56 @@ export function ReportIssueForm({ typeOptions }: { typeOptions: ComplaintTypeOpt
       <form onSubmit={handleSubmit(onSubmit)} className="relative z-10 w-full space-y-6 lg:w-3/5" noValidate>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div className="space-y-2">
-            <label className="text-sm font-bold text-gray-700 dark:text-gray-300">{t("labelName")}</label>
+            <label htmlFor="report-name" className="text-sm font-bold text-gray-700 dark:text-gray-300">
+              {t("labelName")} <span className="text-red-500">*</span>
+            </label>
             <input
+              id="report-name"
               type="text"
+              autoComplete="name"
               {...register("name")}
               placeholder={t("phName")}
+              aria-required="true"
+              aria-invalid={!!errors.name}
+              aria-describedby={errors.name ? "report-name-error" : undefined}
               className="w-full rounded-xl border-2 border-gray-200 bg-transparent px-4 py-3 text-koura-text outline-none transition-colors focus:border-koura-secondary dark:border-white/10 dark:text-white dark:focus:border-[#D4AF37]"
             />
-            {errors.name && <p className="text-xs font-medium text-red-500">{t("validation.nameRequired")}</p>}
+            {errors.name && (
+              <p id="report-name-error" role="alert" className="text-xs font-medium text-red-500">
+                {t("validation.nameRequired")}
+              </p>
+            )}
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-bold text-gray-700 dark:text-gray-300">{t("labelPhone")}</label>
+            <label htmlFor="report-phone" className="text-sm font-bold text-gray-700 dark:text-gray-300">
+              {t("labelPhone")} <span className="text-red-500">*</span>
+            </label>
             <input
+              id="report-phone"
               type="tel"
               dir="ltr"
+              autoComplete="tel"
               {...register("phone")}
               placeholder={t("phPhone")}
+              aria-required="true"
+              aria-invalid={!!errors.phone}
+              aria-describedby={errors.phone ? "report-phone-error" : undefined}
               className="w-full rounded-xl border-2 border-gray-200 bg-transparent px-4 py-3 text-koura-text outline-none transition-colors focus:border-koura-secondary dark:border-white/10 dark:text-white dark:focus:border-[#D4AF37]"
             />
-            {errors.phone && <p className="text-xs font-medium text-red-500">{t("validation.phoneRequired")}</p>}
+            {errors.phone && (
+              <p id="report-phone-error" role="alert" className="text-xs font-medium text-red-500">
+                {t("validation.phoneRequired")}
+              </p>
+            )}
           </div>
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-bold text-gray-700 dark:text-gray-300">{t("labelType")}</label>
+          <label htmlFor="report-type" className="text-sm font-bold text-gray-700 dark:text-gray-300">
+            {t("labelType")}
+          </label>
           <select
+            id="report-type"
             {...register("type")}
             className="w-full appearance-none rounded-xl border-2 border-gray-200 bg-transparent px-4 py-3 text-koura-text outline-none transition-colors focus:border-koura-secondary dark:border-white/10 dark:text-gray-300 dark:focus:border-[#D4AF37]"
           >
@@ -219,14 +244,24 @@ export function ReportIssueForm({ typeOptions }: { typeOptions: ComplaintTypeOpt
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-bold text-gray-700 dark:text-gray-300">{t("labelDesc")}</label>
+          <label htmlFor="report-description" className="text-sm font-bold text-gray-700 dark:text-gray-300">
+            {t("labelDesc")} <span className="text-red-500">*</span>
+          </label>
           <textarea
+            id="report-description"
             rows={5}
             {...register("description")}
             placeholder={t("phDesc")}
+            aria-required="true"
+            aria-invalid={!!errors.description}
+            aria-describedby={errors.description ? "report-description-error" : undefined}
             className="w-full resize-none rounded-xl border-2 border-gray-200 bg-transparent px-4 py-3 text-koura-text outline-none transition-colors focus:border-koura-secondary dark:border-white/10 dark:text-white dark:focus:border-[#D4AF37]"
           />
-          {errors.description && <p className="text-xs font-medium text-red-500">{t("validation.descRequired")}</p>}
+          {errors.description && (
+            <p id="report-description-error" role="alert" className="text-xs font-medium text-red-500">
+              {t("validation.descRequired")}
+            </p>
+          )}
         </div>
 
         <div className="space-y-2">

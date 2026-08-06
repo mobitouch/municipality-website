@@ -18,6 +18,8 @@ import {
   FaXmark,
 } from "react-icons/fa6";
 import { Link } from "@/i18n/navigation";
+import { LanguageSwitcher } from "./LanguageSwitcher";
+import { ThemeToggle } from "./ThemeToggle";
 
 const NAV_ITEMS = [
   { href: "/", key: "home", icon: FaHouse },
@@ -124,6 +126,11 @@ export function MobileNav() {
               </div>
 
               <div className="space-y-4 border-t border-gray-200 pt-6 dark:border-white/10">
+                <div className="flex items-center justify-center gap-4 md:hidden">
+                  <ThemeToggle variant="inline" />
+                  <div className="h-6 w-px bg-gray-200 dark:bg-white/10" />
+                  <LanguageSwitcher variant="inline" />
+                </div>
                 <div dir="ltr" className="text-center text-xs font-medium text-gray-500">
                   {tNav("phone")} | {tNav("email")}
                 </div>

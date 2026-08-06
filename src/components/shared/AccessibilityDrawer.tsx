@@ -44,12 +44,12 @@ export function AccessibilityDrawer() {
         type="button"
         onClick={() => setOpen(true)}
         aria-label={t("open")}
-        className={`relative flex items-center justify-center rounded-s-xl bg-koura-primary p-3 text-white shadow-[-5px_0_15px_rgba(0,0,0,0.2)] transition-all duration-300 hover:pe-4 dark:bg-[#D4AF37] dark:text-black ${
+        className={`relative flex items-center justify-center rounded-l-xl bg-koura-primary p-3 text-white shadow-[-5px_0_15px_rgba(0,0,0,0.2)] transition-all duration-300 hover:pr-4 dark:bg-[#D4AF37] dark:text-black ${
           open ? "pointer-events-none opacity-0" : "opacity-100"
         }`}
       >
         <FaWheelchair className="text-2xl" />
-        <span className="absolute top-0 end-0 -mt-1 -me-1 flex h-3 w-3">
+        <span className="absolute top-0 right-0 -mt-1 -mr-1 flex h-3 w-3">
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75" />
           <span className="relative inline-flex h-3 w-3 rounded-full bg-white" />
         </span>
@@ -58,11 +58,11 @@ export function AccessibilityDrawer() {
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ x: "100%", opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: "100%", opacity: 0 }}
+            initial={{ x: "100%", y: "-50%", opacity: 0 }}
+            animate={{ x: 0, y: "-50%", opacity: 1 }}
+            exit={{ x: "100%", y: "-50%", opacity: 0 }}
             transition={{ duration: 0.35, ease: "easeOut" }}
-            className="absolute end-0 top-1/2 w-[320px] -translate-y-1/2 rounded-s-2xl border border-gray-200 bg-white/95 p-6 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-black/90"
+            className="absolute right-0 top-1/2 max-h-[calc(100dvh-2rem)] w-80 max-w-[calc(100vw-1.5rem)] overflow-y-auto rounded-l-2xl border border-gray-200 bg-white/95 p-6 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-black/90"
           >
             <div className="mb-6 flex items-center justify-between border-b border-gray-200 pb-4 dark:border-white/10">
               <h3 className="flex items-center gap-2 text-xl font-black text-koura-text dark:text-white">

@@ -88,7 +88,7 @@ export function ServiceCategorySearch({
                       {cat.title}
                     </Link>
                     <p className="text-sm leading-relaxed font-medium text-gray-500 dark:text-gray-400">{cat.desc}</p>
-                    <div className="mt-8 flex items-center gap-2 text-sm font-bold text-koura-primary opacity-0 transition-opacity group-hover:opacity-100 dark:text-[#D4AF37]">
+                    <div className="mt-8 flex items-center gap-2 text-sm font-bold text-koura-primary opacity-100 transition-opacity md:opacity-0 md:group-hover:opacity-100 dark:text-[#D4AF37]">
                       <span>{labels.explore}</span>
                       <FaArrowLeft className="rtl:rotate-180" />
                     </div>

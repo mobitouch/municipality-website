@@ -180,28 +180,47 @@ export function TrackComplaintForm() {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div className="space-y-2">
-          <label className="text-sm font-bold text-gray-700 dark:text-gray-300">{t("labelReference")}</label>
+          <label htmlFor="track-reference" className="text-sm font-bold text-gray-700 dark:text-gray-300">
+            {t("labelReference")} <span className="text-red-500">*</span>
+          </label>
           <input
+            id="track-reference"
             type="text"
             dir="ltr"
             {...register("reference")}
             placeholder={t("phReference")}
+            aria-required="true"
+            aria-invalid={!!errors.reference}
+            aria-describedby={errors.reference ? "track-reference-error" : undefined}
             className="w-full rounded-xl border-2 border-gray-200 bg-transparent px-4 py-3 text-koura-text outline-none transition-colors focus:border-koura-secondary dark:border-white/10 dark:text-white dark:focus:border-[#D4AF37]"
           />
           {errors.reference && (
-            <p className="text-xs font-medium text-red-500">{t("validation.referenceRequired")}</p>
+            <p id="track-reference-error" role="alert" className="text-xs font-medium text-red-500">
+              {t("validation.referenceRequired")}
+            </p>
           )}
         </div>
         <div className="space-y-2">
-          <label className="text-sm font-bold text-gray-700 dark:text-gray-300">{t("labelContact")}</label>
+          <label htmlFor="track-contact" className="text-sm font-bold text-gray-700 dark:text-gray-300">
+            {t("labelContact")} <span className="text-red-500">*</span>
+          </label>
           <input
+            id="track-contact"
             type="text"
             dir="ltr"
+            autoComplete="tel"
             {...register("contact")}
             placeholder={t("phContact")}
+            aria-required="true"
+            aria-invalid={!!errors.contact}
+            aria-describedby={errors.contact ? "track-contact-error" : undefined}
             className="w-full rounded-xl border-2 border-gray-200 bg-transparent px-4 py-3 text-koura-text outline-none transition-colors focus:border-koura-secondary dark:border-white/10 dark:text-white dark:focus:border-[#D4AF37]"
           />
-          {errors.contact && <p className="text-xs font-medium text-red-500">{t("validation.contactRequired")}</p>}
+          {errors.contact && (
+            <p id="track-contact-error" role="alert" className="text-xs font-medium text-red-500">
+              {t("validation.contactRequired")}
+            </p>
+          )}
         </div>
       </div>
 

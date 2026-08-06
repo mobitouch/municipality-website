@@ -21,6 +21,28 @@ body {
   overflow-x: hidden;
 }
 
+/* Tailwind's preflight resets button cursor to `default`; restore the
+   pointer cursor on every interactive control so hover state reads as
+   clickable, while keeping disabled controls non-interactive-looking. */
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]),
+input[type="submit"]:not(:disabled),
+input[type="button"]:not(:disabled),
+input[type="reset"]:not(:disabled),
+select:not(:disabled),
+label[for] {
+  cursor: pointer;
+}
+
+button:disabled,
+[role="button"][aria-disabled="true"],
+input[type="submit"]:disabled,
+input[type="button"]:disabled,
+input[type="reset"]:disabled,
+select:disabled {
+  cursor: not-allowed;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

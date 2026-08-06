@@ -15,7 +15,7 @@ import { routing } from "@/i18n/routing";
  * state removes hover timing from the equation entirely and works identically
  * on touch devices.
  */
-export function LanguageSwitcher() {
+export function LanguageSwitcher({ variant = "topbar" }: { variant?: "topbar" | "inline" }) {
   const t = useTranslations("LanguageSwitcher");
   const locale = useLocale();
   const pathname = usePathname();
@@ -57,7 +57,11 @@ export function LanguageSwitcher() {
         aria-haspopup="menu"
         aria-expanded={open}
         aria-label={t("label")}
-        className="flex h-11 items-center gap-1.5 rounded-lg px-2 text-xs font-bold tracking-wide text-white/90 transition-colors hover:text-koura-accent dark:hover:text-[#D4AF37]"
+        className={`flex h-11 items-center gap-1.5 rounded-lg px-2 text-xs font-bold tracking-wide transition-colors ${
+          variant === "topbar"
+            ? "text-white/90 hover:text-koura-accent dark:hover:text-[#D4AF37]"
+            : "text-koura-text hover:text-koura-primary dark:text-gray-200 dark:hover:text-[#D4AF37]"
+        }`}
       >
         <FaGlobe className="text-koura-accent dark:text-[#D4AF37]" />
         <span>{t(locale)}</span>

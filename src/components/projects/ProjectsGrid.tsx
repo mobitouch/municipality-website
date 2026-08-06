@@ -90,7 +90,7 @@ export function ProjectsGrid({
                   {project.status === "done" ? labels.statusDone : `${labels.statusProg} ${project.progress}%`}
                 </span>
                 <h3 className="mb-2 text-2xl font-black">{project.title}</h3>
-                <p className="line-clamp-2 translate-y-4 text-sm font-medium text-gray-300 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                <p className="line-clamp-2 text-sm font-medium text-gray-300 transition-all duration-300 md:translate-y-4 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
                   {project.desc}
                 </p>
               </div>
