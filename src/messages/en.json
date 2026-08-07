@@ -260,12 +260,16 @@
     "errorTitle": "Couldn't submit your complaint",
     "errorGeneric": "Something went wrong. Please try again later.",
     "errorMailNotConfigured": "We couldn't submit this right now. Please contact us by phone for now.",
+    "errorRateLimited": "You've already sent several complaints. Please wait a few minutes before trying again.",
+    "errorBusy": "The service is busy right now. Please try again in a moment.",
+    "errorTooLarge": "Your attachments are too large. Please remove some files or use smaller images.",
     "validation": {
-      "nameRequired": "Please enter your full name",
+      "nameRequired": "Please enter a valid full name",
       "phoneRequired": "Please enter a valid phone number",
       "descRequired": "Please describe the complaint (at least 10 characters)",
       "fileTooLarge": "File size exceeds 5MB",
-      "fileType": "Unsupported file type"
+      "fileType": "Unsupported file type",
+      "tooManyFiles": "You can attach up to {max} files."
     },
     "trackLink": "Track My Complaint"
   },
@@ -292,8 +296,10 @@
     "errorTitle": "Couldn't send your message",
     "errorGeneric": "Something went wrong. Please try again later.",
     "errorMailNotConfigured": "We couldn't submit this right now. Please contact us by phone for now.",
+    "errorRateLimited": "You've already sent several messages. Please wait a few minutes before trying again.",
+    "errorBusy": "The service is busy right now. Please try again in a moment.",
     "validation": {
-      "nameRequired": "Please enter your name",
+      "nameRequired": "Please enter a valid name",
       "contactRequired": "Please enter a valid email or phone number",
       "messageRequired": "Please enter a message (at least 10 characters)"
     }
@@ -453,6 +459,7 @@
     "errorTitle": "Couldn't find that request",
     "errorNotFound": "No match for that tracking code and contact info. Double-check them, or contact us directly.",
     "errorGeneric": "Something went wrong. Please try again later.",
+    "errorRateLimited": "Too many lookups. Please wait a minute and try again.",
     "validation": {
       "referenceRequired": "Please enter your tracking code",
       "contactRequired": "Please enter the phone or email you submitted with"

@@ -260,12 +260,16 @@
     "errorTitle": "Impossible d'envoyer la réclamation",
     "errorGeneric": "Une erreur s'est produite. Veuillez réessayer plus tard.",
     "errorMailNotConfigured": "Nous n'avons pas pu envoyer votre message pour le moment. Merci de nous contacter par téléphone.",
+    "errorRateLimited": "Vous avez déjà envoyé plusieurs réclamations. Veuillez patienter quelques minutes avant de réessayer.",
+    "errorBusy": "Le service est momentanément saturé. Veuillez réessayer dans un instant.",
+    "errorTooLarge": "Vos pièces jointes sont trop volumineuses. Supprimez des fichiers ou utilisez des images plus petites.",
     "validation": {
-      "nameRequired": "Veuillez entrer votre nom complet",
+      "nameRequired": "Veuillez entrer un nom complet valide",
       "phoneRequired": "Veuillez entrer un numéro de téléphone valide",
       "descRequired": "Veuillez décrire la réclamation (10 caractères minimum)",
       "fileTooLarge": "La taille du fichier dépasse 5 Mo",
-      "fileType": "Type de fichier non pris en charge"
+      "fileType": "Type de fichier non pris en charge",
+      "tooManyFiles": "Vous pouvez joindre jusqu'à {max} fichiers."
     },
     "trackLink": "Suivre ma Réclamation"
   },
@@ -292,8 +296,10 @@
     "errorTitle": "Impossible d'envoyer le message",
     "errorGeneric": "Une erreur s'est produite. Veuillez réessayer plus tard.",
     "errorMailNotConfigured": "Nous n'avons pas pu envoyer votre message pour le moment. Merci de nous contacter par téléphone.",
+    "errorRateLimited": "Vous avez déjà envoyé plusieurs messages. Veuillez patienter quelques minutes avant de réessayer.",
+    "errorBusy": "Le service est momentanément saturé. Veuillez réessayer dans un instant.",
     "validation": {
-      "nameRequired": "Veuillez entrer votre nom",
+      "nameRequired": "Veuillez entrer un nom valide",
       "contactRequired": "Veuillez entrer un e-mail ou un numéro de téléphone valide",
       "messageRequired": "Veuillez entrer un message (10 caractères minimum)"
     }
@@ -453,6 +459,7 @@
     "errorTitle": "Demande introuvable",
     "errorNotFound": "Aucune correspondance pour ce code et ces coordonnées. Vérifiez-les ou contactez-nous directement.",
     "errorGeneric": "Une erreur s'est produite. Veuillez réessayer plus tard.",
+    "errorRateLimited": "Trop de recherches. Veuillez patienter une minute et réessayer.",
     "validation": {
       "referenceRequired": "Veuillez entrer votre code de suivi",
       "contactRequired": "Veuillez entrer le téléphone ou l'email fourni lors de votre envoi"

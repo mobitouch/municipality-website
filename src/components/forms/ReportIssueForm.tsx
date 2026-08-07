@@ -17,9 +17,11 @@ import {
 import { Link } from "@/i18n/navigation";
 import {
   ALLOWED_FILE_TYPES,
+  MAX_FILE_COUNT,
   MAX_FILE_SIZE,
   MAX_TOTAL_FILES_SIZE,
   reportIssueSchema,
+  type ReportIssueFormValues,
   type ReportIssueInput,
 } from "@/lib/validation";
 import type { ComplaintTypeOption, TrackStep } from "@/types/content";
@@ -33,12 +35,35 @@ const LocationPicker = dynamic(() => import("./LocationPicker"), {
 
 type Status = "idle" | "submitting" | "success" | "error";
 
+type ErrorKey =
+  | "errorMailNotConfigured"
+  | "errorRateLimited"
+  | "errorBusy"
+  | "errorTooLarge"
+  | "errorGeneric";
+
+/**
+ * Maps an API error code onto a message the citizen can act on. "Try again
+ * later" is useless advice when the real problem is that the photos are too
+ * big or that they've already filed three complaints this hour.
+ */
+function errorKeyFor(status: number, code: unknown): ErrorKey {
+  if (code === "mail_not_configured") return "errorMailNotConfigured";
+  if (code === "too_large" || code === "file_too_large" || code === "too_many_files") {
+    return "errorTooLarge";
+  }
+  if (status === 429) return "errorRateLimited";
+  if (status === 503) return "errorBusy";
+  if (status === 413) return "errorTooLarge";
+  return "errorGeneric";
+}
+
 export function ReportIssueForm({ typeOptions }: { typeOptions: ComplaintTypeOption[] }) {
   const t = useTranslations("ReportIssue");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [status, setStatus] = useState<Status>("idle");
-  const [errorKey, setErrorKey] = useState<"errorMailNotConfigured" | "errorGeneric">("errorGeneric");
+  const [errorKey, setErrorKey] = useState<ErrorKey>("errorGeneric");
   const [fileError, setFileError] = useState<string | null>(null);
   const [files, setFiles] = useState<File[]>([]);
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
@@ -49,14 +74,27 @@ export function ReportIssueForm({ typeOptions }: { typeOptions: ComplaintTypeOpt
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<ReportIssueInput>({
+    // Three generics: what the fields hold, the context type, and what the
+    // resolver hands to onSubmit once the schema has sanitised it.
+  } = useForm<ReportIssueFormValues, unknown, ReportIssueInput>({
     resolver: zodResolver(reportIssueSchema),
-    defaultValues: { name: "", phone: "", type: typeOptions[0]?.value as ReportIssueInput["type"], description: "", company: "" },
+    defaultValues: {
+      name: "",
+      phone: "",
+      type: typeOptions[0]?.value as ReportIssueFormValues["type"],
+      description: "",
+      company: "",
+    },
   });
 
   function addFiles(newFiles: FileList | File[]) {
     const incoming = Array.from(newFiles);
     const combined = [...files, ...incoming];
+
+    if (combined.length > MAX_FILE_COUNT) {
+      setFileError(t("validation.tooManyFiles", { max: MAX_FILE_COUNT }));
+      return;
+    }
 
     for (const file of incoming) {
       if (!ALLOWED_FILE_TYPES.includes(file.type)) {
@@ -96,10 +134,18 @@ export function ReportIssueForm({ typeOptions }: { typeOptions: ComplaintTypeOpt
       }
       files.forEach((file) => formData.append("files", file));
 
-      const res = await fetch("/api/report-issue", { method: "POST", body: formData });
+      // Without a deadline a stalled upload leaves the button spinning with
+      // no way back; the server caps its own work at 30s, so this is the
+      // matching client-side bound.
+      const res = await fetch("/api/report-issue", {
+        method: "POST",
+        body: formData,
+        signal: AbortSignal.timeout(45_000),
+      });
+
+      const body = await res.json().catch(() => null);
 
       if (res.ok) {
-        const body = await res.json().catch(() => null);
         setTrackingCode(body?.trackingCode ?? null);
         setStatus("success");
         reset();
@@ -108,8 +154,7 @@ export function ReportIssueForm({ typeOptions }: { typeOptions: ComplaintTypeOpt
         return;
       }
 
-      const body = await res.json().catch(() => null);
-      setErrorKey(body?.error === "mail_not_configured" ? "errorMailNotConfigured" : "errorGeneric");
+      setErrorKey(errorKeyFor(res.status, body?.error));
       setStatus("error");
     } catch {
       setErrorKey("errorGeneric");
@@ -190,6 +235,7 @@ export function ReportIssueForm({ typeOptions }: { typeOptions: ComplaintTypeOpt
               type="text"
               autoComplete="name"
               {...register("name")}
+              maxLength={120}
               placeholder={t("phName")}
               aria-required="true"
               aria-invalid={!!errors.name}
@@ -212,6 +258,7 @@ export function ReportIssueForm({ typeOptions }: { typeOptions: ComplaintTypeOpt
               dir="ltr"
               autoComplete="tel"
               {...register("phone")}
+              maxLength={30}
               placeholder={t("phPhone")}
               aria-required="true"
               aria-invalid={!!errors.phone}
@@ -251,6 +298,7 @@ export function ReportIssueForm({ typeOptions }: { typeOptions: ComplaintTypeOpt
             id="report-description"
             rows={5}
             {...register("description")}
+            maxLength={4000}
             placeholder={t("phDesc")}
             aria-required="true"
             aria-invalid={!!errors.description}

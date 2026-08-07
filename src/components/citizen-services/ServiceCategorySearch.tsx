@@ -52,6 +52,11 @@ export function ServiceCategorySearch({
           <input
             type="text"
             value={query}
+            // Filters a fixed list of categories in the browser and is never
+            // sent anywhere, so the only concern is the work done per
+            // keystroke — capped so a pasted wall of text can't turn every
+            // keypress into a scan over a huge string.
+            maxLength={100}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={labels.searchPh}
             className="w-full border-none bg-transparent px-4 py-3 font-medium text-koura-text placeholder-gray-500 outline-none dark:text-white dark:placeholder-gray-400"

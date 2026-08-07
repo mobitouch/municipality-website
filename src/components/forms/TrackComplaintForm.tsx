@@ -6,7 +6,11 @@ import { useForm } from "react-hook-form";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { FaCircleExclamation, FaMagnifyingGlass } from "react-icons/fa6";
-import { trackSchema, type TrackInput } from "@/lib/validation";
+import {
+  trackSchema,
+  type TrackFormValues,
+  type TrackInput,
+} from "@/lib/validation";
 import type { DashboardTrackingStatus } from "@/lib/dashboard";
 
 type Status = "idle" | "submitting" | "success" | "error";
@@ -35,14 +39,16 @@ function stepIndex(status: string): number {
 export function TrackComplaintForm() {
   const t = useTranslations("Track");
   const [status, setStatus] = useState<Status>("idle");
-  const [errorKey, setErrorKey] = useState<"errorNotFound" | "errorGeneric">("errorGeneric");
+  const [errorKey, setErrorKey] = useState<
+    "errorNotFound" | "errorRateLimited" | "errorGeneric"
+  >("errorGeneric");
   const [result, setResult] = useState<DashboardTrackingStatus | null>(null);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<TrackInput>({
+  } = useForm<TrackFormValues, unknown, TrackInput>({
     resolver: zodResolver(trackSchema),
     defaultValues: { reference: "", contact: "" },
   });
@@ -54,17 +60,19 @@ export function TrackComplaintForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
+        signal: AbortSignal.timeout(20_000),
       });
 
+      const body = await res.json().catch(() => null);
+
       if (res.ok) {
-        const body = await res.json().catch(() => null);
         setResult(body?.status ?? null);
         setStatus("success");
         return;
       }
 
-      const body = await res.json().catch(() => null);
-      setErrorKey(body?.error === "not_found" ? "errorNotFound" : "errorGeneric");
+      if (res.status === 429) setErrorKey("errorRateLimited");
+      else setErrorKey(body?.error === "not_found" ? "errorNotFound" : "errorGeneric");
       setStatus("error");
     } catch {
       setErrorKey("errorGeneric");
@@ -188,6 +196,7 @@ export function TrackComplaintForm() {
             type="text"
             dir="ltr"
             {...register("reference")}
+            maxLength={40}
             placeholder={t("phReference")}
             aria-required="true"
             aria-invalid={!!errors.reference}
@@ -210,6 +219,7 @@ export function TrackComplaintForm() {
             dir="ltr"
             autoComplete="tel"
             {...register("contact")}
+            maxLength={160}
             placeholder={t("phContact")}
             aria-required="true"
             aria-invalid={!!errors.contact}

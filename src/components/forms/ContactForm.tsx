@@ -6,21 +6,36 @@ import { useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { FaCircleCheck, FaCircleExclamation, FaPaperPlane } from "react-icons/fa6";
-import { contactSchema, type ContactInput } from "@/lib/validation";
+import {
+  contactSchema,
+  type ContactFormValues,
+  type ContactInput,
+} from "@/lib/validation";
 
 type Status = "idle" | "submitting" | "success" | "error";
+
+type ErrorKey = "errorMailNotConfigured" | "errorRateLimited" | "errorBusy" | "errorGeneric";
+
+function errorKeyFor(status: number, code: unknown): ErrorKey {
+  if (code === "mail_not_configured") return "errorMailNotConfigured";
+  if (status === 429) return "errorRateLimited";
+  if (status === 503) return "errorBusy";
+  return "errorGeneric";
+}
 
 export function ContactForm() {
   const t = useTranslations("Contact");
   const [status, setStatus] = useState<Status>("idle");
-  const [errorKey, setErrorKey] = useState<"errorMailNotConfigured" | "errorGeneric">("errorGeneric");
+  const [errorKey, setErrorKey] = useState<ErrorKey>("errorGeneric");
 
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<ContactInput>({
+    // Three generics: what the fields hold, the context type, and what the
+    // resolver hands to onSubmit once the schema has sanitised it.
+  } = useForm<ContactFormValues, unknown, ContactInput>({
     resolver: zodResolver(contactSchema),
     defaultValues: { name: "", contact: "", message: "", company: "" },
   });
@@ -32,6 +47,7 @@ export function ContactForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
+        signal: AbortSignal.timeout(30_000),
       });
 
       if (res.ok) {
@@ -41,7 +57,7 @@ export function ContactForm() {
       }
 
       const body = await res.json().catch(() => null);
-      setErrorKey(body?.error === "mail_not_configured" ? "errorMailNotConfigured" : "errorGeneric");
+      setErrorKey(errorKeyFor(res.status, body?.error));
       setStatus("error");
     } catch {
       setErrorKey("errorGeneric");
@@ -77,6 +93,7 @@ export function ContactForm() {
           type="text"
           autoComplete="name"
           {...register("name")}
+          maxLength={120}
           placeholder={t("phName")}
           aria-required="true"
           aria-invalid={!!errors.name}
@@ -100,6 +117,7 @@ export function ContactForm() {
           dir="ltr"
           autoComplete="email"
           {...register("contact")}
+          maxLength={160}
           placeholder={t("phEmail")}
           aria-required="true"
           aria-invalid={!!errors.contact}
@@ -121,6 +139,7 @@ export function ContactForm() {
           id="contact-message"
           rows={4}
           {...register("message")}
+          maxLength={4000}
           placeholder={t("phMsg")}
           aria-required="true"
           aria-invalid={!!errors.message}

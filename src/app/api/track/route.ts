@@ -1,24 +1,30 @@
-import { NextRequest, NextResponse } from "next/server";
-import { trackSchema } from "@/lib/validation";
-import { checkRateLimit } from "@/lib/rateLimit";
+import { NextRequest } from "next/server";
+import { MAX_JSON_BODY_SIZE, trackSchema } from "@/lib/validation";
 import { lookupTrackingStatus } from "@/lib/dashboard";
+import { guardRequest, isGuardFailure, json } from "@/lib/apiGuards";
+
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+export const maxDuration = 15;
 
 export async function POST(request: NextRequest) {
-  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
-  if (!checkRateLimit(`track:${ip}`)) {
-    return NextResponse.json({ error: "rate_limited" }, { status: 429 });
-  }
+  const guard = guardRequest(request, "track", MAX_JSON_BODY_SIZE);
+  if (isGuardFailure(guard)) return guard.response;
+  const { headers } = guard;
 
   const body = await request.json().catch(() => null);
   const parsed = trackSchema.safeParse(body);
   if (!parsed.success) {
-    return NextResponse.json({ error: "invalid" }, { status: 400 });
+    return json({ error: "invalid" }, { status: 400, headers });
   }
 
   const status = await lookupTrackingStatus(parsed.data.reference, parsed.data.contact);
   if (!status) {
-    return NextResponse.json({ error: "not_found" }, { status: 404 });
+    // Deliberately one response for "no such reference", "wrong contact" and
+    // "dashboard unreachable". Distinguishing them would turn this into an
+    // oracle for guessing which reference numbers exist.
+    return json({ error: "not_found" }, { status: 404, headers });
   }
 
-  return NextResponse.json({ status });
+  return json({ status }, { headers });
 }

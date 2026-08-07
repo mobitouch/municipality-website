@@ -32,6 +32,85 @@ export interface DashboardTrackingStatus {
   timeline: DashboardTrackingEvent[];
 }
 
+const TIMEOUT_MS = 6_000;
+/** Cap on a dashboard response we'll buffer, so a runaway peer can't OOM us. */
+const MAX_RESPONSE_BYTES = 256 * 1024;
+
+/**
+ * Circuit breaker for the dashboard.
+ *
+ * When the dashboard is down, every submission used to sit through the full
+ * timeout before falling back to email. Under load that turns one dead
+ * dependency into a queue of stalled requests holding concurrency slots — the
+ * failure mode behind the "couldn't submit" errors during a CPU spike. After
+ * a run of failures we stop calling it for a cooldown and fail instantly, so
+ * the email channel takes over without the wait.
+ */
+const FAILURE_THRESHOLD = 3;
+const COOLDOWN_MS = 60_000;
+
+let consecutiveFailures = 0;
+let openUntil = 0;
+
+function circuitOpen(): boolean {
+  if (Date.now() < openUntil) return true;
+  if (openUntil !== 0) {
+    // Cooldown elapsed — allow one probe through.
+    openUntil = 0;
+    consecutiveFailures = 0;
+  }
+  return false;
+}
+
+function recordFailure() {
+  consecutiveFailures += 1;
+  if (consecutiveFailures >= FAILURE_THRESHOLD) {
+    openUntil = Date.now() + COOLDOWN_MS;
+  }
+}
+
+function recordSuccess() {
+  consecutiveFailures = 0;
+  openUntil = 0;
+}
+
+function getConfig(): { baseUrl: string; apiKey: string } | null {
+  const baseUrl = process.env.DASHBOARD_API_URL;
+  const apiKey = process.env.DASHBOARD_API_KEY;
+  if (!baseUrl || !apiKey) return null;
+
+  // The dashboard holds citizens' personal details; refuse to ship them, or
+  // the shared secret, over plaintext HTTP. Localhost is exempt so the two
+  // apps can be developed side by side.
+  try {
+    const url = new URL(baseUrl);
+    const isLocal = url.hostname === "localhost" || url.hostname === "127.0.0.1";
+    if (url.protocol !== "https:" && !isLocal) {
+      console.error("DASHBOARD_API_URL must use https");
+      return null;
+    }
+  } catch {
+    console.error("DASHBOARD_API_URL is not a valid URL");
+    return null;
+  }
+
+  return { baseUrl: baseUrl.replace(/\/+$/, ""), apiKey };
+}
+
+async function readJson(res: Response): Promise<unknown> {
+  const declared = Number(res.headers.get("content-length"));
+  if (Number.isFinite(declared) && declared > MAX_RESPONSE_BYTES) return null;
+
+  const text = await res.text().catch(() => "");
+  if (text.length > MAX_RESPONSE_BYTES) return null;
+
+  try {
+    return JSON.parse(text);
+  } catch {
+    return null;
+  }
+}
+
 /**
  * Forwards a form submission to the staff dashboard's own /api/requests
  * endpoint (a separate Next.js app) so it shows up live for municipal staff.
@@ -45,33 +124,41 @@ export interface DashboardTrackingStatus {
 export async function forwardToDashboard(
   payload: DashboardRequestPayload,
 ): Promise<DashboardForwardResult> {
-  const baseUrl = process.env.DASHBOARD_API_URL;
-  const apiKey = process.env.DASHBOARD_API_KEY;
-
-  if (!baseUrl || !apiKey) {
-    return { ok: false };
-  }
+  const config = getConfig();
+  if (!config) return { ok: false };
+  if (circuitOpen()) return { ok: false };
 
   try {
-    const res = await fetch(`${baseUrl.replace(/\/+$/, "")}/api/requests`, {
+    const res = await fetch(`${config.baseUrl}/api/requests`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-api-key": apiKey,
+        "x-api-key": config.apiKey,
       },
       body: JSON.stringify(payload),
-      signal: AbortSignal.timeout(8000),
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+      cache: "no-store",
+      redirect: "error",
     });
 
     if (!res.ok) {
-      console.error("dashboard forward rejected", res.status, await res.text().catch(() => ""));
+      // Status only — the body can echo back the citizen's submission, and
+      // logs on shared hosting aren't a place for personal data.
+      console.error("dashboard forward rejected", res.status);
+      recordFailure();
       return { ok: false };
     }
 
-    const data = (await res.json().catch(() => null)) as { request?: { referenceNumber?: string } } | null;
-    return { ok: true, referenceNumber: data?.request?.referenceNumber };
+    recordSuccess();
+    const data = (await readJson(res)) as { request?: { referenceNumber?: string } } | null;
+    const reference = data?.request?.referenceNumber;
+    return {
+      ok: true,
+      referenceNumber: typeof reference === "string" ? reference : undefined,
+    };
   } catch (error) {
-    console.error("dashboard forward failed", error);
+    console.error("dashboard forward failed", error instanceof Error ? error.message : error);
+    recordFailure();
     return { ok: false };
   }
 }
@@ -87,27 +174,40 @@ export async function lookupTrackingStatus(
   reference: string,
   contact: string,
 ): Promise<DashboardTrackingStatus | null> {
-  const baseUrl = process.env.DASHBOARD_API_URL;
-  const apiKey = process.env.DASHBOARD_API_KEY;
-
-  if (!baseUrl || !apiKey) return null;
+  const config = getConfig();
+  if (!config) return null;
+  if (circuitOpen()) return null;
 
   try {
-    const url = new URL(`${baseUrl.replace(/\/+$/, "")}/api/track`);
+    const url = new URL(`${config.baseUrl}/api/track`);
     url.searchParams.set("reference", reference);
     url.searchParams.set("contact", contact);
 
     const res = await fetch(url, {
-      headers: { "x-api-key": apiKey },
-      signal: AbortSignal.timeout(8000),
+      headers: { "x-api-key": config.apiKey },
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+      cache: "no-store",
+      redirect: "error",
     });
 
-    if (!res.ok) return null;
+    // A 404 is a normal answer, not a dependency failure — it must not count
+    // toward tripping the breaker.
+    if (res.status === 404) {
+      recordSuccess();
+      return null;
+    }
 
-    const data = (await res.json().catch(() => null)) as { status?: DashboardTrackingStatus } | null;
+    if (!res.ok) {
+      recordFailure();
+      return null;
+    }
+
+    recordSuccess();
+    const data = (await readJson(res)) as { status?: DashboardTrackingStatus } | null;
     return data?.status ?? null;
   } catch (error) {
-    console.error("dashboard tracking lookup failed", error);
+    console.error("dashboard tracking lookup failed", error instanceof Error ? error.message : error);
+    recordFailure();
     return null;
   }
 }

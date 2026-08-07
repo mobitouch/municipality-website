@@ -1,15 +1,30 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import {
-  ALLOWED_FILE_TYPES,
+  MAX_FILE_COUNT,
   MAX_FILE_SIZE,
+  MAX_REQUEST_BODY_SIZE,
   MAX_TOTAL_FILES_SIZE,
+  isServiceableLocation,
   reportIssueSchema,
   type ReportIssueType,
 } from "@/lib/validation";
 import { isMailConfigured, sendMail } from "@/lib/mailer";
-import { checkRateLimit } from "@/lib/rateLimit";
 import { escapeHtml } from "@/lib/escapeHtml";
 import { forwardToDashboard } from "@/lib/dashboard";
+import { guardRequest, isGuardFailure, json } from "@/lib/apiGuards";
+import { submissionGate } from "@/lib/concurrency";
+import {
+  SNIFF_BYTES,
+  isAllowedType,
+  matchesDeclaredType,
+  safeAttachmentName,
+} from "@/lib/fileGuards";
+
+// Handles multipart uploads and talks to SMTP — needs the Node runtime, and
+// must never be prerendered or cached.
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+export const maxDuration = 30;
 
 function generateTrackingCode() {
   return `AM-${Date.now().toString(36).toUpperCase()}-${Math.floor(Math.random() * 1000)}`;
@@ -26,14 +41,34 @@ const DASHBOARD_CATEGORY: Record<ReportIssueType, string> = {
 };
 
 export async function POST(request: NextRequest) {
-  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
-  if (!checkRateLimit(`report-issue:${ip}`)) {
-    return NextResponse.json({ error: "rate_limited" }, { status: 429 });
+  // Same-origin, body-size and rate-limit checks, all before a byte of the
+  // body is read. Ordering matters: parsing a 15MB multipart body only to
+  // then reject it is exactly the work we're trying to avoid.
+  const guard = guardRequest(request, "report-issue", MAX_REQUEST_BODY_SIZE);
+  if (isGuardFailure(guard)) return guard.response;
+  const { headers } = guard;
+
+  // Admission control. Everything past this point is CPU-bound on the single
+  // event loop, so we cap how much of it runs at once and shed the rest.
+  const release = await submissionGate.acquire();
+  if (!release) {
+    return json({ error: "busy" }, { status: 503, headers: { ...headers, "Retry-After": "30" } });
   }
 
+  try {
+    return await handleSubmission(request, headers);
+  } catch (error) {
+    console.error("report-issue failed", error);
+    return json({ error: "server_error" }, { status: 500, headers });
+  } finally {
+    release();
+  }
+}
+
+async function handleSubmission(request: NextRequest, headers: Record<string, string>) {
   const formData = await request.formData().catch(() => null);
   if (!formData) {
-    return NextResponse.json({ error: "invalid" }, { status: 400 });
+    return json({ error: "invalid" }, { status: 400, headers });
   }
 
   const parsed = reportIssueSchema.safeParse({
@@ -47,32 +82,51 @@ export async function POST(request: NextRequest) {
   });
 
   if (!parsed.success) {
-    return NextResponse.json({ error: "invalid" }, { status: 400 });
+    return json({ error: "invalid" }, { status: 400, headers });
   }
 
   // Honeypot field filled in => likely a bot. Pretend success, do nothing.
   if (parsed.data.company) {
-    return NextResponse.json({ ok: true, trackingCode: generateTrackingCode() });
+    return json({ ok: true, trackingCode: generateTrackingCode() }, { headers });
   }
 
   const files = formData.getAll("files").filter((f): f is File => f instanceof File && f.size > 0);
 
+  if (files.length > MAX_FILE_COUNT) {
+    return json({ error: "too_many_files" }, { status: 400, headers });
+  }
+
   let totalSize = 0;
   for (const file of files) {
-    if (!ALLOWED_FILE_TYPES.includes(file.type)) {
-      return NextResponse.json({ error: "file_type" }, { status: 400 });
+    if (!isAllowedType(file.type)) {
+      return json({ error: "file_type" }, { status: 400, headers });
     }
     if (file.size > MAX_FILE_SIZE) {
-      return NextResponse.json({ error: "file_too_large" }, { status: 400 });
+      return json({ error: "file_too_large" }, { status: 400, headers });
     }
     totalSize += file.size;
   }
   if (totalSize > MAX_TOTAL_FILES_SIZE) {
-    return NextResponse.json({ error: "file_too_large" }, { status: 400 });
+    return json({ error: "file_too_large" }, { status: 400, headers });
+  }
+
+  // Verify each file really is what its Content-Type claims. Reading only the
+  // first few bytes keeps this cheap; the full buffer is materialised later,
+  // and only if we're actually going to send it.
+  for (const file of files) {
+    const head = new Uint8Array(await file.slice(0, SNIFF_BYTES).arrayBuffer());
+    if (!matchesDeclaredType(head, file.type)) {
+      return json({ error: "file_type" }, { status: 400, headers });
+    }
   }
 
   const { name, phone, type, description, lat, lng } = parsed.data;
-  const locationLine = lat !== undefined && lng !== undefined ? `${lat}, ${lng}` : "-";
+
+  const hasLocation =
+    lat !== undefined && lng !== undefined && isServiceableLocation(lat, lng);
+  // Round to ~1m. The full float precision the browser sends is noise, and
+  // trimming it keeps a citizen's exact coordinates out of the record.
+  const locationLine = hasLocation ? `${lat.toFixed(5)}, ${lng.toFixed(5)}` : "-";
   const attachmentNote =
     files.length > 0
       ? `\n\n📎 ${files.length} file(s) attached — sent to the municipality inbox by email.`
@@ -82,11 +136,15 @@ export async function POST(request: NextRequest) {
   // up live for municipal staff, with the real location pin) and email
   // (secondary/best-effort, and the only channel that carries the photo
   // attachments — the dashboard's data model doesn't support file uploads).
+  // Sent verbatim. Spreadsheet formula injection is handled where the data is
+  // actually serialised into a spreadsheet — the dashboard's CSV export
+  // (dashboard/lib/format.ts) — rather than here, so the stored value stays
+  // exactly what the citizen wrote and displays cleanly in the staff UI.
   const dashboardResult = await forwardToDashboard({
     citizenName: name,
     phone,
     category: DASHBOARD_CATEGORY[type],
-    location: lat !== undefined && lng !== undefined ? `${lat}, ${lng}` : "",
+    location: hasLocation ? locationLine : "",
     description: description + attachmentNote,
     source: "website",
   });
@@ -96,18 +154,22 @@ export async function POST(request: NextRequest) {
   let emailOk = false;
   if (isMailConfigured()) {
     try {
-      const attachments = await Promise.all(
-        files.map(async (file) => ({
-          filename: file.name,
+      // Buffered one at a time rather than with Promise.all: concurrent
+      // arrayBuffer() calls would hold every attachment in memory at once,
+      // and the SMTP send that follows is serial anyway.
+      const attachments: { filename: string; content: Buffer; contentType: string }[] = [];
+      for (const [index, file] of files.entries()) {
+        attachments.push({
+          filename: safeAttachmentName(file.name, file.type, index),
           content: Buffer.from(await file.arrayBuffer()),
           contentType: file.type,
-        })),
-      );
+        });
+      }
 
       await sendMail({
         subject: `New complaint (${type}) — ${trackingCode}`,
         text: `Name: ${name}\nPhone: ${phone}\nType: ${type}\nLocation: ${locationLine}\nTracking: ${trackingCode}\n\n${description}`,
-        html: `<p><strong>Name:</strong> ${escapeHtml(name)}</p><p><strong>Phone:</strong> ${escapeHtml(phone)}</p><p><strong>Type:</strong> ${escapeHtml(type)}</p><p><strong>Location:</strong> ${escapeHtml(locationLine)}</p><p><strong>Tracking code:</strong> ${trackingCode}</p><p>${escapeHtml(description).replace(/\n/g, "<br/>")}</p>`,
+        html: `<p><strong>Name:</strong> ${escapeHtml(name)}</p><p><strong>Phone:</strong> ${escapeHtml(phone)}</p><p><strong>Type:</strong> ${escapeHtml(type)}</p><p><strong>Location:</strong> ${escapeHtml(locationLine)}</p><p><strong>Tracking code:</strong> ${escapeHtml(trackingCode)}</p><p>${escapeHtml(description).replace(/\n/g, "<br/>")}</p>`,
         attachments,
       });
       emailOk = true;
@@ -117,8 +179,8 @@ export async function POST(request: NextRequest) {
   }
 
   if (dashboardResult.ok || emailOk) {
-    return NextResponse.json({ ok: true, trackingCode });
+    return json({ ok: true, trackingCode }, { headers });
   }
 
-  return NextResponse.json({ error: "mail_not_configured" }, { status: 503 });
+  return json({ error: "mail_not_configured" }, { status: 503, headers });
 }
