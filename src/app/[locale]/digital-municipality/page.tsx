@@ -58,10 +58,10 @@ export default async function DigitalMunicipalityPage({
             <FaMicrochip />
             {t("badge")}
           </span>
-          <h1 className="mb-6 text-6xl font-black text-koura-text md:text-8xl dark:text-white dark:drop-shadow-[0_0_20px_rgba(212,175,53,0.4)]">
+          <h1 className="mb-6 text-4xl font-black text-koura-text sm:text-5xl md:text-8xl dark:text-white dark:drop-shadow-[0_0_20px_rgba(212,175,53,0.4)]">
             {t("title1")} <span className="text-koura-primary dark:text-[#D4AF37]">{t("title2")}</span>
           </h1>
-          <p className="mx-auto max-w-2xl text-xl leading-relaxed font-medium text-gray-600 md:text-2xl dark:text-gray-400">
+          <p className="mx-auto max-w-2xl text-lg leading-relaxed font-medium text-gray-600 sm:text-xl md:text-2xl dark:text-gray-400">
             {t("desc")}
           </p>
         </RevealOnScroll>

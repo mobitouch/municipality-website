@@ -32,10 +32,10 @@ export default async function CitizenServicesPage({
         <div className="absolute inset-0 z-0 bg-gradient-to-b from-koura-bg/80 via-koura-bg/90 to-koura-bg dark:from-[#050505]/80 dark:via-[#050505]/95 dark:to-[#050505]" />
 
         <RevealOnScroll once className="relative z-10 mt-20 container mx-auto px-4 text-center sm:px-6 lg:px-8 xl:px-12">
-          <h1 className="mb-6 text-5xl font-black text-koura-primary md:text-7xl dark:text-[#D4AF37] dark:drop-shadow-[0_0_20px_rgba(212,175,53,0.4)]">
+          <h1 className="mb-6 text-4xl font-black text-koura-primary sm:text-5xl md:text-7xl dark:text-[#D4AF37] dark:drop-shadow-[0_0_20px_rgba(212,175,53,0.4)]">
             {t("title")}
           </h1>
-          <p className="mx-auto mb-10 max-w-2xl text-xl leading-relaxed font-medium text-gray-600 dark:text-gray-400">
+          <p className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed font-medium text-gray-600 sm:text-xl dark:text-gray-400">
             {t("subtitle")}
           </p>
 

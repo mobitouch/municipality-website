@@ -27,6 +27,10 @@ const csp = [
   // next/font self-hosts the Tajawal files at build time, so no font CDN.
   "font-src 'self' data:",
   `connect-src 'self'${isDev ? " ws: wss:" : ""}`,
+  // The contact page embeds the Google Maps location iframe. Without this the
+  // frame falls back to `default-src 'self'` and the map is blocked outright,
+  // leaving an empty panel on the page.
+  "frame-src https://www.google.com https://maps.google.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self'",

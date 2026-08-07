@@ -49,7 +49,9 @@ export function AccessibilityDrawer() {
         }`}
       >
         <FaWheelchair className="text-2xl" />
-        <span className="absolute top-0 right-0 -mt-1 -mr-1 flex h-3 w-3">
+        {/* Kept inside the button box: an outward offset put the dot past the
+            viewport edge, where it was clipped on every page. */}
+        <span className="absolute top-1 right-1 flex h-3 w-3">
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75" />
           <span className="relative inline-flex h-3 w-3 rounded-full bg-white" />
         </span>

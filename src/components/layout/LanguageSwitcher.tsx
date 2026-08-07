@@ -15,7 +15,16 @@ import { routing } from "@/i18n/routing";
  * state removes hover timing from the equation entirely and works identically
  * on touch devices.
  */
-export function LanguageSwitcher({ variant = "topbar" }: { variant?: "topbar" | "inline" }) {
+export function LanguageSwitcher({
+  variant = "topbar",
+  className = "",
+  onSelect,
+}: {
+  variant?: "topbar" | "inline";
+  className?: string;
+  /** Lets the mobile drawer close itself once a language is picked. */
+  onSelect?: () => void;
+}) {
   const t = useTranslations("LanguageSwitcher");
   const locale = useLocale();
   const pathname = usePathname();
@@ -45,8 +54,49 @@ export function LanguageSwitcher({ variant = "topbar" }: { variant?: "topbar" | 
 
   function selectLocale(nextLocale: (typeof routing.locales)[number]) {
     setOpen(false);
+    onSelect?.();
     if (nextLocale === locale) return;
     router.replace(pathname, { locale: nextLocale });
+  }
+
+  /**
+   * Inside the mobile drawer the control is a segmented group, not a dropdown.
+   * The dropdown anchors itself with `top-full`, and in the drawer the trigger
+   * sits ~50px from the bottom of the screen, so all three options opened below
+   * the fold — unreachable without discovering that the drawer scrolls. A
+   * segmented control shows every language up front and switches in one tap,
+   * with nothing that can be clipped by the drawer's scroll container.
+   */
+  if (variant === "inline") {
+    return (
+      <div
+        role="group"
+        aria-label={t("label")}
+        className={`flex items-center gap-1 rounded-xl bg-gray-100 p-1 dark:bg-white/5 ${className}`}
+      >
+        {routing.locales.map((l) => {
+          const active = l === locale;
+          return (
+            <button
+              key={l}
+              type="button"
+              onClick={() => selectLocale(l)}
+              // The visible text is the short code, so the accessible name
+              // carries the full language name.
+              aria-label={t(l)}
+              aria-current={active ? "true" : undefined}
+              className={`min-h-11 flex-1 rounded-lg text-sm font-bold tracking-wide transition-colors ${
+                active
+                  ? "bg-koura-primary text-white shadow-sm dark:bg-[#D4AF37] dark:text-black"
+                  : "text-koura-text hover:bg-white dark:text-gray-200 dark:hover:bg-white/10"
+              }`}
+            >
+              {l.toUpperCase()}
+            </button>
+          );
+        })}
+      </div>
+    );
   }
 
   return (
@@ -57,11 +107,7 @@ export function LanguageSwitcher({ variant = "topbar" }: { variant?: "topbar" | 
         aria-haspopup="menu"
         aria-expanded={open}
         aria-label={t("label")}
-        className={`flex h-11 items-center gap-1.5 rounded-lg px-2 text-xs font-bold tracking-wide transition-colors ${
-          variant === "topbar"
-            ? "text-white/90 hover:text-koura-accent dark:hover:text-[#D4AF37]"
-            : "text-koura-text hover:text-koura-primary dark:text-gray-200 dark:hover:text-[#D4AF37]"
-        }`}
+        className="flex h-11 items-center gap-1.5 rounded-lg px-2 text-xs font-bold tracking-wide text-white/90 transition-colors hover:text-koura-accent dark:hover:text-[#D4AF37]"
       >
         <FaGlobe className="text-koura-accent dark:text-[#D4AF37]" />
         <span>{t(locale)}</span>
@@ -86,7 +132,7 @@ export function LanguageSwitcher({ variant = "topbar" }: { variant?: "topbar" | 
                 type="button"
                 role="menuitem"
                 onClick={() => selectLocale(l)}
-                className="flex w-full items-center gap-2 px-4 py-2 text-start text-sm font-bold text-koura-text transition-colors hover:bg-koura-bg hover:text-koura-primary dark:text-white dark:hover:bg-white/5 dark:hover:text-[#D4AF37]"
+                className="flex min-h-11 w-full items-center gap-2 px-4 text-start text-sm font-bold text-koura-text transition-colors hover:bg-koura-bg hover:text-koura-primary dark:text-white dark:hover:bg-white/5 dark:hover:text-[#D4AF37]"
               >
                 <span
                   className={`inline-block h-2 w-2 shrink-0 rounded-full ${

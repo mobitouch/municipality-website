@@ -23,7 +23,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/80 backdrop-blur-md transition-all duration-300 dark:border-white/10 dark:bg-[#050505]/80">
-      <div className="hidden bg-koura-primary px-4 py-2 text-xs text-white transition-colors duration-300 sm:px-6 lg:px-8 xl:px-12 md:block">
+      <div className="on-primary-surface hidden bg-koura-primary px-4 py-2 text-xs text-white transition-colors duration-300 sm:px-6 lg:px-8 xl:px-12 md:block">
         <div className="container mx-auto flex w-full items-center justify-between gap-4">
           <div className="flex items-center gap-6 font-medium text-white/90">
             <span className="flex items-center gap-2">
@@ -44,20 +44,21 @@ export function Header() {
         </div>
       </div>
 
-      <div className="container mx-auto flex w-full items-center justify-between gap-6 px-4 py-3 sm:px-6 lg:px-8 xl:px-12">
-        <Link href="/" className="group flex shrink-0 items-center gap-4">
+      <div className="container mx-auto flex w-full items-center justify-between gap-3 px-4 py-3 sm:gap-6 sm:px-6 lg:px-8 xl:px-12">
+        <Link href="/" className="group flex min-w-0 items-center gap-2.5 sm:gap-4">
           <Image
             src="/images/logo.jpeg"
             alt={t("brandName")}
             width={56}
             height={56}
-            className="h-14 w-14 rounded-full border border-gray-100 object-cover shadow-sm transition-shadow dark:border-[#D4AF37]/30 dark:shadow-[0_0_15px_rgba(212,175,53,0.3)]"
+            priority
+            className="h-11 w-11 shrink-0 rounded-full border border-gray-100 object-cover shadow-sm transition-shadow sm:h-14 sm:w-14 dark:border-[#D4AF37]/30 dark:shadow-[0_0_15px_rgba(212,175,53,0.3)]"
           />
-          <div>
-            <h1 className="text-2xl font-black tracking-tight text-koura-primary dark:text-white">
+          <div className="min-w-0">
+            <h1 className="truncate text-lg font-black tracking-tight text-koura-primary sm:text-xl lg:text-2xl dark:text-white">
               {t("brandName")}
             </h1>
-            <span className="mt-0.5 block text-[11px] font-bold tracking-widest text-koura-primary uppercase dark:text-[#D4AF37]">
+            <span className="mt-0.5 block truncate text-[9px] font-bold tracking-widest text-koura-primary uppercase sm:text-[11px] dark:text-[#D4AF37]">
               {t("brandSub")}
             </span>
           </div>

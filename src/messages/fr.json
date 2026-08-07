@@ -49,7 +49,8 @@
   },
   "ThemeToggle": {
     "toLight": "Passer au mode clair",
-    "toDark": "Passer au mode sombre"
+    "toDark": "Passer au mode sombre",
+    "label": "Changer de thème"
   },
   "MobileNav": {
     "open": "Ouvrir le menu",

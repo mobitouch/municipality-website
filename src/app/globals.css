@@ -43,6 +43,29 @@ select:disabled {
   cursor: not-allowed;
 }
 
+/*
+ * Visible keyboard focus.
+ *
+ * Nothing in the app styled `:focus-visible`, leaving keyboard and
+ * switch-access users with only the browser's default ring — thin, inconsistent
+ * between engines, and low-contrast against this green/gold palette. Mouse and
+ * touch users are unaffected: `:focus-visible` does not match pointer focus.
+ */
+:focus-visible {
+  outline: 3px solid var(--color-koura-primary);
+  outline-offset: 2px;
+}
+
+.dark :focus-visible {
+  outline-color: var(--color-koura-secondary);
+}
+
+/* The desktop contact bar is solid koura-primary, where a green ring would
+   disappear into the background. */
+.on-primary-surface :focus-visible {
+  outline-color: #ffffff;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

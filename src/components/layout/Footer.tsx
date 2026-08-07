@@ -53,7 +53,7 @@ export function Footer() {
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/5 bg-white/5 text-gray-300 transition-all duration-300 hover:-translate-y-1 hover:bg-koura-primary hover:text-white dark:hover:bg-[#D4AF37] dark:hover:text-black"
+                  className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/5 bg-white/5 text-gray-300 transition-all duration-300 hover:-translate-y-1 hover:bg-koura-primary hover:text-white dark:hover:bg-[#D4AF37] dark:hover:text-black"
                 >
                   <Icon />
                 </a>
@@ -66,25 +66,23 @@ export function Footer() {
               {t("linksTitle")}
               <span className="absolute bottom-0 end-0 h-0.5 w-1/2 bg-koura-primary dark:bg-[#D4AF37]" />
             </h3>
+            {/* `min-h-11` gives each link a touch-sized hit area; the tighter
+                `space-y` keeps the visual rhythm close to the old text-only list. */}
             <div className="grid grid-cols-2 gap-4">
-              <ul className="space-y-4 text-sm font-bold text-gray-400">
-                {QUICK_LINKS.slice(0, 4).map(({ href, key }) => (
-                  <li key={href}>
-                    <Link href={href} className="transition-colors hover:text-koura-accent dark:hover:text-[#D4AF37]">
-                      {tNav(key)}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-              <ul className="space-y-4 text-sm font-bold text-gray-400">
-                {QUICK_LINKS.slice(4).map(({ href, key }) => (
-                  <li key={href}>
-                    <Link href={href} className="transition-colors hover:text-koura-accent dark:hover:text-[#D4AF37]">
-                      {tNav(key)}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              {[QUICK_LINKS.slice(0, 4), QUICK_LINKS.slice(4)].map((group, i) => (
+                <ul key={i} className="space-y-1 text-sm font-bold text-gray-400">
+                  {group.map(({ href, key }) => (
+                    <li key={href}>
+                      <Link
+                        href={href}
+                        className="flex min-h-11 items-center transition-colors hover:text-koura-accent dark:hover:text-[#D4AF37]"
+                      >
+                        {tNav(key)}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              ))}
             </div>
           </div>
 
@@ -116,12 +114,18 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-xs font-medium text-gray-500 md:flex-row">
-          <p>{t("copyright", { year })}</p>
-          <div className="flex items-center gap-6">
-            <a href="#" className="transition-colors hover:text-white">{t("privacy")}</a>
-            <a href="#" className="transition-colors hover:text-white">{t("terms")}</a>
-            <a href="#" className="transition-colors hover:text-white">{t("accessibility")}</a>
+        <div className="flex flex-col items-center justify-between gap-2 border-t border-white/10 pt-8 text-xs font-medium text-gray-500 md:flex-row md:gap-4">
+          <p className="text-center">{t("copyright", { year })}</p>
+          <div className="flex flex-wrap items-center justify-center gap-x-6">
+            {[t("privacy"), t("terms"), t("accessibility")].map((label) => (
+              <a
+                key={label}
+                href="#"
+                className="flex min-h-11 items-center transition-colors hover:text-white"
+              >
+                {label}
+              </a>
+            ))}
           </div>
         </div>
       </div>

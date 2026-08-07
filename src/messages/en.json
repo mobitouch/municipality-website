@@ -49,7 +49,8 @@
   },
   "ThemeToggle": {
     "toLight": "Switch to light mode",
-    "toDark": "Switch to dark mode"
+    "toDark": "Switch to dark mode",
+    "label": "Toggle colour theme"
   },
   "MobileNav": {
     "open": "Open menu",
