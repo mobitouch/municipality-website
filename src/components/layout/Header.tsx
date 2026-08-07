@@ -23,7 +23,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/80 backdrop-blur-md transition-all duration-300 dark:border-white/10 dark:bg-[#050505]/80">
-      <div className="on-primary-surface hidden bg-koura-primary px-4 py-2 text-xs text-white transition-colors duration-300 sm:px-6 lg:px-8 xl:px-12 md:block">
+      <div className="on-primary-surface hidden bg-koura-primary px-4 py-1 text-xs text-white transition-colors duration-300 sm:px-6 lg:px-8 xl:px-12 md:block">
         <div className="container mx-auto flex w-full items-center justify-between gap-4">
           <div className="flex items-center gap-6 font-medium text-white/90">
             <span className="flex items-center gap-2">
@@ -44,7 +44,7 @@ export function Header() {
         </div>
       </div>
 
-      <div className="container mx-auto flex w-full items-center justify-between gap-3 px-4 py-3 sm:gap-6 sm:px-6 lg:px-8 xl:px-12">
+      <div className="container mx-auto flex w-full items-center justify-between gap-3 px-4 py-1.5 sm:gap-6 sm:px-6 sm:py-2 lg:px-8 xl:px-12">
         <Link href="/" className="group flex min-w-0 items-center gap-2.5 sm:gap-4">
           <Image
             src="/images/logo.jpeg"

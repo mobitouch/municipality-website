@@ -9,6 +9,7 @@ import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
 import { AccessibilityDrawer } from "@/components/shared/AccessibilityDrawer";
 import { routing } from "@/i18n/routing";
+import { SITE_URL } from "@/lib/siteUrl";
 import "../globals.css";
 
 const tajawal = Tajawal({
@@ -39,7 +40,7 @@ export async function generateMetadata({
   const { locale } = await params;
   const isAr = locale === "ar";
   return {
-    metadataBase: new URL("https://amioun.gov.lb"),
+    metadataBase: new URL(SITE_URL),
     title: {
       template: isAr ? "%s | بلدية أميون" : "%s | Amioun Municipality",
       default: isAr

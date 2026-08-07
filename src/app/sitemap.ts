@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
+import { SITE_URL } from "@/lib/siteUrl";
 
 const ROUTES = [
   "",
@@ -13,7 +14,7 @@ const ROUTES = [
   "/track",
 ];
 
-const BASE_URL = "https://amioun.gov.lb";
+const BASE_URL = SITE_URL;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return routing.locales.flatMap((locale) =>

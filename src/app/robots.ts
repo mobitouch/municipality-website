@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/siteUrl";
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: { userAgent: "*", allow: "/" },
-    sitemap: "https://amioun.gov.lb/sitemap.xml",
+    sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }
