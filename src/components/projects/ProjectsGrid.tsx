@@ -56,7 +56,13 @@ export function ProjectsGrid({
       {filtered.length === 0 ? (
         <p className="text-center font-medium text-gray-500 dark:text-gray-400">{labels.noResults}</p>
       ) : (
-        <div className="grid grid-cols-1 gap-8 [perspective:1000px] md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 items-start gap-8 [perspective:1000px] md:grid-cols-2 lg:grid-cols-3">
+          {/* Two things keep the photo and its caption on the same rectangle:
+              the aspect ratio lives on the card itself (the caption is
+              positioned against the card, so an inner wrapper shorter than it
+              strands the white text on blank background), and `items-start`
+              above stops the grid stretching cards to the tallest one in the
+              row, which would override that ratio again. */}
           {filtered.map((project, i) => (
             <motion.div
               key={project.title}
@@ -64,18 +70,17 @@ export function ProjectsGrid({
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
-              className={`group relative cursor-pointer overflow-hidden rounded-3xl shadow-xl dark:shadow-[0_10px_30px_rgba(0,0,0,0.8)] ${
+              style={{ aspectRatio: project.aspect.replace("/", " / ") }}
+              className={`group relative cursor-pointer overflow-hidden rounded-3xl bg-gray-200 shadow-xl dark:bg-[#111] dark:shadow-[0_10px_30px_rgba(0,0,0,0.8)] ${
                 project.aspect === "4/5" ? "lg:mt-12" : ""
               }`}
             >
-              <div
-                className="relative overflow-hidden bg-gray-200 dark:bg-[#111]"
-                style={{ aspectRatio: project.aspect.replace("/", " / ") }}
-              >
+              <div className="absolute inset-0 overflow-hidden">
                 <Image
                   src={project.image}
                   alt=""
                   fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />

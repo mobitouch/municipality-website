@@ -44,7 +44,7 @@ export default async function ReportIssuePage({
       </section>
 
       <section className="relative z-20 container mx-auto mt-10 px-4 sm:px-6 lg:px-8 xl:px-12">
-        <RevealOnScroll y={0} className="rounded-3xl border border-white/50 bg-white/80 p-8 shadow-xl backdrop-blur-xl transition-colors duration-300 md:p-12 dark:border-white/10 dark:bg-white/5 dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+        <RevealOnScroll y={0} className="rounded-3xl border border-white/50 bg-white/80 p-5 shadow-xl backdrop-blur-xl transition-colors duration-300 sm:p-8 md:p-12 dark:border-white/10 dark:bg-white/5 dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
           <h3 className="mb-8 text-2xl font-bold text-koura-text dark:text-white">{t("formTitle")}</h3>
           <ReportIssueForm typeOptions={typeOptions} />
         </RevealOnScroll>

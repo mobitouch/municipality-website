@@ -105,10 +105,11 @@ export default async function AboutPage({
             <StaggerItem key={member.name}>
               <TiltCard max={10} className="rounded-3xl border border-gray-100 bg-white p-6 text-center shadow-lg transition-colors duration-300 dark:border-white/10 dark:bg-[#111]">
                 <Image
-                  src={`https://ui-avatars.com/api/?name=${member.avatarSeed}&background=${member.avatarBg}&color=${member.avatarBg === "ddd" ? "333" : "fff"}&size=128`}
+                  src={member.image}
                   alt={member.name}
-                  width={96}
-                  height={96}
+                  width={128}
+                  height={128}
+                  sizes="96px"
                   className="mx-auto mb-4 h-24 w-24 rounded-full border-4 border-koura-bg object-cover shadow-md dark:border-black"
                 />
                 <h3 className="text-lg font-bold text-koura-text dark:text-white">{member.name}</h3>

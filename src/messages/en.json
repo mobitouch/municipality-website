@@ -121,28 +121,24 @@
     "councilDesc": "Dedicated members working together to serve and advance Amioun.",
     "members": [
       {
-        "name": "Eng. Ghassan Azar",
+        "name": "Lorem Ipsum",
         "role": "Mayor",
-        "avatarSeed": "President",
-        "avatarBg": "4A6635"
+        "image": "/images/team/member-1.jpg"
       },
       {
-        "name": "Dr. Fadi Ferzli",
+        "name": "Dolor Sitamet",
         "role": "Deputy Mayor",
-        "avatarSeed": "Vice+President",
-        "avatarBg": "8B5A2B"
+        "image": "/images/team/member-2.jpg"
       },
       {
-        "name": "Mrs. Mary Abboud",
+        "name": "Consectetur Adipiscing",
         "role": "Council Member",
-        "avatarSeed": "Member+1",
-        "avatarBg": "ddd"
+        "image": "/images/team/member-3.jpg"
       },
       {
-        "name": "Mr. Joseph El-Khoury",
+        "name": "Elit Sed Do",
         "role": "Council Member",
-        "avatarSeed": "Member+2",
-        "avatarBg": "ddd"
+        "image": "/images/team/member-4.jpg"
       }
     ]
   },
@@ -365,7 +361,7 @@
       "desc": "In a pioneering step towards the future, the Mayor of Amioun announced the start of Phase 1 of the 'Digital Municipality' project, enabling citizens to complete transactions online.",
       "date": "2026-08-15",
       "readMinutes": 3,
-      "image": "https://images.unsplash.com/photo-1577495508048-b635879837f1?q=80&w=1000&auto=format&fit=crop"
+      "image": "/images/content/news-featured.jpg"
     },
     "items": [
       {
@@ -373,21 +369,21 @@
         "title": "Free Child Vaccination Campaign at Municipal Clinic",
         "desc": "The municipality invites all parents to bring their children to the clinic over the weekend.",
         "date": "2026-08-10",
-        "image": "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=800&auto=format&fit=crop"
+        "image": "/images/content/news-1.jpg"
       },
       {
         "category": "Environment",
         "title": "Forest Cleanup and Large Tree Planting Drive",
         "desc": "Dozens of volunteers participated in cleaning the olive groves surrounding Amioun.",
         "date": "2026-08-05",
-        "image": "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=800&auto=format&fit=crop"
+        "image": "/images/content/news-2.jpg"
       },
       {
         "category": "Administrative Decisions",
         "title": "Adjustment of Municipal Building Working Hours",
         "desc": "Per the new resolution, reception hours for physical applications will be extended.",
         "date": "2026-08-01",
-        "image": "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=800&auto=format&fit=crop"
+        "image": "/images/content/news-3.jpg"
       }
     ]
   },
@@ -408,7 +404,7 @@
         "desc": "Comprehensive project to rehabilitate the road network in town center for smooth traffic.",
         "status": "progress",
         "progress": 70,
-        "image": "https://images.unsplash.com/photo-1541888086425-d81bb19240f5?q=80&w=800&auto=format&fit=crop",
+        "image": "/images/content/project-roads.jpg",
         "aspect": "4/3"
       },
       {
@@ -416,7 +412,7 @@
         "desc": "Installation of over 300 solar-powered lights to save energy.",
         "status": "done",
         "progress": 100,
-        "image": "https://images.unsplash.com/photo-1550986616-1f6b1e60dcbe?q=80&w=800&auto=format&fit=crop",
+        "image": "/images/content/project-solar.jpg",
         "aspect": "4/5"
       },
       {
@@ -424,7 +420,7 @@
         "desc": "Creating additional green spaces, children's playgrounds, and smart benches.",
         "status": "progress",
         "progress": 30,
-        "image": "https://images.unsplash.com/photo-1518005020951-eccb494ad742?q=80&w=800&auto=format&fit=crop",
+        "image": "/images/content/project-park.jpg",
         "aspect": "4/3"
       },
       {
@@ -432,7 +428,7 @@
         "desc": "Replacing main pipelines and ensuring continuous clean water supply to all homes.",
         "status": "progress",
         "progress": 60,
-        "image": "https://images.unsplash.com/photo-1553641171-0aa4ee0cae9a?q=80&w=800&auto=format&fit=crop",
+        "image": "/images/content/project-water.jpg",
         "aspect": "4/5"
       },
       {
@@ -440,7 +436,7 @@
         "desc": "Modern center for processing and sorting waste to protect the environment.",
         "status": "done",
         "progress": 100,
-        "image": "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?q=80&w=800&auto=format&fit=crop",
+        "image": "/images/content/project-waste.jpg",
         "aspect": "4/3"
       }
     ]
@@ -492,5 +488,8 @@
       "Status changed": "Status updated",
       "Department assigned": "Routed to department"
     }
+  },
+  "Telegram": {
+    "label": "Contact us on Telegram"
   }
 }

@@ -12,8 +12,7 @@ export interface TimelineItem {
 export interface CouncilMember {
   name: string;
   role: string;
-  avatarSeed: string;
-  avatarBg: string;
+  image: string;
 }
 
 export interface ServiceCategory {

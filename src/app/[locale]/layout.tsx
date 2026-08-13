@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { TelegramButton } from "@/components/shared/TelegramButton";
 import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
 import { AccessibilityDrawer } from "@/components/shared/AccessibilityDrawer";
 import { routing } from "@/i18n/routing";
@@ -87,6 +88,7 @@ export default async function LocaleLayout({
             <main className="flex-1">{children}</main>
             <Footer />
             <WhatsAppButton />
+            <TelegramButton />
             <AccessibilityDrawer />
           </ThemeProvider>
         </NextIntlClientProvider>

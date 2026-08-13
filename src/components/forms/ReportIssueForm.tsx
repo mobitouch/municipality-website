@@ -385,12 +385,22 @@ export function ReportIssueForm({ typeOptions }: { typeOptions: ComplaintTypeOpt
       </form>
 
       <div className="w-full lg:w-2/5">
-        <div className="flex h-full flex-col rounded-3xl border border-white/50 bg-white/80 p-6 shadow-xl dark:border-white/10 dark:bg-white/5">
+        {/* The map card sits inside the page's own padded card, so the two
+            paddings stack. Kept tight on phones — at p-6 the nesting left the
+            map only ~225px wide on a 375px screen. */}
+        <div className="flex h-full flex-col rounded-3xl border border-white/50 bg-white/80 p-4 shadow-xl sm:p-6 dark:border-white/10 dark:bg-white/5">
           <h3 className="mb-4 text-xl font-bold text-koura-text dark:text-white">{t("mapTitle")}</h3>
           <p className="mb-4 text-sm text-gray-500 dark:text-gray-400">{t("mapDesc")}</p>
 
-          <div className="relative min-h-[280px] flex-grow overflow-hidden rounded-2xl border-2 border-transparent transition-colors">
-            <LocationPicker value={location} onChange={setLocation} />
+          {/* Leaflet sizes itself from its parent, and a parent whose only
+              height comes from `min-h` + `flex-grow` resolves `height: 100%`
+              to nothing on the phones where this form is actually used — the
+              map then renders as an empty panel. An explicit height at every
+              breakpoint is what guarantees it has somewhere to draw. */}
+          <div className="relative h-[320px] shrink-0 overflow-hidden rounded-2xl border-2 border-transparent transition-colors sm:h-[380px] lg:h-auto lg:min-h-[320px] lg:flex-grow">
+            <div className="absolute inset-0">
+              <LocationPicker value={location} onChange={setLocation} />
+            </div>
           </div>
 
           <div className="mt-4 flex items-center gap-2 rounded-xl bg-white/90 px-3 py-2 text-center text-sm font-bold text-koura-primary dark:bg-black/80 dark:text-[#D4AF37]">

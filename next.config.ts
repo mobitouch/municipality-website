@@ -21,9 +21,10 @@ const csp = [
   `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
   // Tailwind and framer-motion both write inline style attributes.
   "style-src 'self' 'unsafe-inline'",
-  // OpenStreetMap serves the map tiles; unpkg serves Leaflet's marker icons;
-  // the other two are the remote sources allowed in `images` below.
-  "img-src 'self' data: https://*.tile.openstreetmap.org https://unpkg.com https://images.unsplash.com https://ui-avatars.com",
+  // OpenStreetMap serves the map tiles. Everything else — card photography,
+  // council avatars, Leaflet's marker icons — is served from public/, so no
+  // other image host needs to be trusted.
+  "img-src 'self' data: https://*.tile.openstreetmap.org",
   // next/font self-hosts the Tajawal files at build time, so no font CDN.
   "font-src 'self' data:",
   `connect-src 'self'${isDev ? " ws: wss:" : ""}`,
@@ -64,10 +65,11 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
 
   images: {
-    remotePatterns: [
-      { protocol: "https", hostname: "images.unsplash.com", pathname: "/**" },
-      { protocol: "https", hostname: "ui-avatars.com", pathname: "/api/**" },
-    ],
+    // No remotePatterns: every image the site renders ships in public/. A
+    // third-party photo host is a dependency that can 404 (as the previous
+    // Unsplash hotlinks did), rate-limit, or slow down first paint, and it
+    // turns /_next/image into an outbound fetcher.
+    remotePatterns: [],
 
     // Every distinct (width, quality) pair is a separate sharp re-encode, and
     // `/_next/image` is reachable by anyone. Left at the defaults that is 15
@@ -82,11 +84,13 @@ const nextConfig: NextConfig = {
     minimumCacheTTL: 2_678_400, // 31 days
     maximumDiskCacheSize: 300_000_000,
 
-    // Source images on this site are photos well under 8MB; a lower ceiling
-    // protects a memory-constrained container from a large upstream fetch.
+    // Both of these only bite on remote sources, which the empty
+    // `remotePatterns` above rules out today. They stay so that adding a host
+    // back later cannot silently reintroduce an unbounded upstream fetch (the
+    // photos here are all well under 8MB) or an open redirect turning
+    // /_next/image into an SSRF — redirects from an allowed host are followed
+    // without re-checking `remotePatterns`.
     maximumResponseBody: 8_000_000,
-    // Redirects from an allowed host are followed without re-checking
-    // remotePatterns, so an open redirect upstream would become an SSRF.
     maximumRedirects: 0,
     dangerouslyAllowSVG: false,
   },
