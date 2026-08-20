@@ -3,8 +3,7 @@
 import { useTranslations } from "next-intl";
 import { FaTelegram } from "react-icons/fa6";
 
-// TODO: replace with the municipality's actual Telegram channel/chat link.
-const TELEGRAM_URL = "https://t.me/";
+const TELEGRAM_URL = "http://t.me/MunicipalityAmionTest_bot";
 
 export function TelegramButton() {
   const t = useTranslations("Telegram");
